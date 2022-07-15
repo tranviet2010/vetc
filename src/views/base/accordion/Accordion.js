@@ -2,7 +2,17 @@ import React, { Component } from 'react'
 import { Button, Form, Row, Col } from 'react-bootstrap';
 
 export default class Accordion extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      data: [
+        { magd: "001", fullname: "trần văn huy", phone: 0987654321, email: "net@vetc.com.vn", cmnd: "0265895354", typemout: "a", status: 1, datecreate: "20/10/2019" },
+        { magd: "001", fullname: "trần văn huy", phone: 0987654321, email: "net@vetc.com.vn", cmnd: "0265895354", typemout: "a", status: 1, datecreate: "20/10/2019" }
+      ]
+    };
+  }
   render() {
+    const { Data } = this.state.data;
     return (
       <div>
         <Row>
@@ -55,17 +65,21 @@ export default class Accordion extends Component {
               </tr>
             </thead>
             <tbody class="table-group-divider">
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                <td>Mark</td>
-                <td>Otto</td>
-              </tr>
+              {
+                Data.map((val,index)=>(
+                  <tr>
+                    <th scope="row">{index}</th>
+                    <td>{val.magd}</td>
+                    <td>{val.fullname}</td>
+                    <td>@mdo</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                  </tr>
+                ))
+              }
             </tbody>
           </table>
         </Row>
