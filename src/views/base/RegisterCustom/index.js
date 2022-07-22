@@ -14,10 +14,12 @@ export default class Index extends Component {
       data: [],
       phone: "",
       giay_to: "",
+      state:"",
       checkDetail: false,
       selected: "",
       addCus: false,
       dataCheck: [],
+      totalCount:"",
 
     };
   }
@@ -37,6 +39,7 @@ export default class Index extends Component {
       addCus: false,
       checkDetail: false,
     })
+    this.componentDidMount();
   }
   handleInputChange = () => {
     const target = event.target;
@@ -47,8 +50,8 @@ export default class Index extends Component {
     })
   }
   searchParam = () => {
-    const { phone, giay_to } = this.state;
-    callApi(`customer-views?mobiNumber=${phone}&idNo=${giay_to}`).then((res) => {
+    const { phone, giay_to,state } = this.state;
+    callApi(`customer-views?mobiNumber=${phone}&idNo=${giay_to}&state=${state}`).then((res) => {
       this.setState({
         data: res.data.data
       })
@@ -56,15 +59,16 @@ export default class Index extends Component {
   }
 
   componentDidMount() {
-    callApi(`customer-views?limit=180`).then((res) => {
+    callApi(`customer-views`).then((res) => {
       this.setState({
-        data: res.data.data
+        data: res.data.data,
+        totalCount:res.data.totalCount
       })
     })
   }
 
   render() {
-    const { data, dataCheck, selected } = this.state;
+    const { data, dataCheck,totalCount } = this.state;
     return (
       <div className='backGround_main'>
         <div className="main_rege">
@@ -100,12 +104,11 @@ export default class Index extends Component {
             </div>
           </Col>
           <Col>
-            <select className="form-select" aria-label="Default select example" value={selected} defaultValue="">
-              <option value="DEFAULT">Trạng thái</option>
-              <option value="1">Hoạt động</option>
-              <option value="2">Chưa xác thực</option>
-              <option value="3">Khóa</option>
-              <option value="4">Đóng</option>
+            <select className="form-select" aria-label="Default select example" defaultValue="" name="state" onChange={this.handleInputChange}>
+              <option value="">Trạng thái</option>
+              <option value="OPEN">Hoạt động</option>
+              <option value="BLOCK_TRANSFER">Khóa chuyển tiền</option>
+              <option value="BLOCK">Khóa</option>
             </select>
           </Col>
           <Col>
@@ -128,8 +131,9 @@ export default class Index extends Component {
                 <th scope="col">Hành động</th>
               </tr>
             </thead>
-            <tbody className="table-group-divider">
+            <tbody className="table-group-divider text-center">
               {
+                data.length==0?<tr className="last_tr"><p>Trống</p></tr>:
                 data.map((val, index) => (
                   <tr className="last_tr" key={index}>
                     <th scope="row">{index + 1}</th>
@@ -140,7 +144,7 @@ export default class Index extends Component {
                     <td>{val.idNo}</td>
                     <td>{val.walletType}</td>
                     <td>{val.state}</td>
-                    <td>{val.datecreate}</td>
+                    <td>{new Date(val.createdDate).toLocaleDateString("vi-VN")}</td>
                     <td href="#" onClick={() => this.handleClick(val)} className="chi_tiet">Chi tiết</td>
                   </tr>
                 ))
@@ -158,7 +162,7 @@ export default class Index extends Component {
               <option value="3">50</option>
               <option value="4">100</option>
             </select>
-            <span> trên tổng số {data.length} bản ghi</span>
+            <span> trên tổng số {totalCount} bản ghi</span>
           </Col>
           <Col className='d-flex justify-content-end'>
             <Pagination>

@@ -27,3 +27,9 @@ input{
 .modal_fix{
     height: 750px;
 }
+select#cars {
+    width: 80%;
+    height: 45px;
+    border-color: #d8dbe0;
+    border-radius: 5px;
+}

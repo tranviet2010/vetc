@@ -58,13 +58,13 @@ const _nav = [
   {
     component: CNavGroup,
     name: 'Thu hộ - chi hộ',
-    to: '/base',
+    to: 'collect_pay',
     icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
         name: 'Danh sách giao dịch',
-        to: '/base/collect_pay',
+        to: 'collect_pay1',
       },
     ],
   },

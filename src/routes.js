@@ -34,6 +34,7 @@ const routes = [
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/typography', name: 'Typography', element: Typography },
   { path: '/base', name: 'Quản lý ví điện tử', exact: true },
+  { path: 'collect_pay', name: 'Thu hộ - chi hộ', exact: true },
   { path: '/base/RegisterCustom', name: 'Đăng ký', element: RegisterCustom },
   { path: '/base/wallet-link', name: 'Liên kết ví', element: WalletLink },
   { path: '/base/rechargeMoney', name: 'Nạp tiền', element: RechargeMoney },
@@ -51,7 +52,7 @@ const routes = [
   { path: '/base/spinners', name: 'Spinners', element: Spinners },
   { path: '/base/tooltips', name: 'Tooltips', element: Tooltips },
 
-  { path: '/base/collect_pay', name: 'Danh sách giao dịch', element: CollectPay },
+  { path: 'collect_pay1', name: 'Danh sách giao dịch', element: CollectPay },
   { path: '/base/report', name: 'Danh sách giao dịch', element: Report },
 
 
