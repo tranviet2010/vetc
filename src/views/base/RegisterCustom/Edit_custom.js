@@ -52,12 +52,12 @@ export default class Edit_custom extends Component {
                 custNo: this.state.giayto,
                 district: "",
                 dob: this.state.birthday,
-                email: this.state.email,
+                email: this.state.email.length==0?Data.email:this.state.email,
                 fax: "",
                 gender: Data.gender,
                 id: Data.custId,
-                idIssueDate: this.state.date_cap,    //ngày cấp
-                idIssuePlace: this.state.noi_cap,
+                idIssueDate: this.state.date_cap.length==0?Data.idIssueDate:this.state.date_cap,    //ngày cấp
+                idIssuePlace: this.state.noi_cap.length==0?Data.idIssuePlace:this.state.noi_cap,
                 idNo: Data.idNo,
                 invCycleEffectDate: "2022-07-21",
                 invoiceCycleType: 0,
@@ -95,12 +95,16 @@ export default class Edit_custom extends Component {
 
         callApi(`customer`,"PUT",data).then((res)=>{
             toast("Cập nhật thành công !")
+            this.props.onClose()
+        })
+        .catch((error)=>{
+            toast.error("Cập nhật thất bại !")
         })
     }
     render() {
         const {show}=this.state;
         const {Data}=this.props;
-        console.log("data===",Data);
+        let date=Data.idIssueDate&& new Date(Data.idIssueDate).toLocaleDateString("sv-SE")
         return (
             <div>
                 <ToastContainer />
@@ -143,15 +147,15 @@ export default class Edit_custom extends Component {
                                             </tr>
                                             <tr className="">
                                                 <td>Email:</td>
-                                                <td><input type="text" name="email" placeholder='Nhập email...' onChange={this.handleInputChange}></input></td>
+                                                <td><input type="text" name="email" defaultValue={Data.email} placeholder='Nhập email...' onChange={this.handleInputChange}></input></td>
                                                 <td>Ngày cấp:</td>
-                                                <td><input type="date" name="date_cap" placeholder='Nhập ngày cấp...' onChange={this.handleInputChange}></input></td>
+                                                <td><input type="date" name="date_cap" defaultValue={date} placeholder='Nhập ngày cấp...' onChange={this.handleInputChange}></input></td>
                                             </tr>
                                             <tr className="">
                                                 <td>Giới tính:</td>
                                                 <td>{Data.gender==1?"Nam":"Nữ"}</td>
                                                 <td>Nơi cấp:</td>
-                                                <td><input type="text" name="noi_cap" placeholder='Nhập nơi cấp...' onChange={this.handleInputChange}></input></td>
+                                                <td><input type="text" name="noi_cap" defaultValue={Data.idIssuePlace} placeholder='Nhập nơi cấp...' onChange={this.handleInputChange}></input></td>
                                             </tr>
                                             <tr className="">
                                                 <td>Ngày sinh:</td>

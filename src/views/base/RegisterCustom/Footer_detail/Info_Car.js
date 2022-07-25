@@ -12,7 +12,6 @@ export default class Info_Car extends Component {
   componentDidMount(){
     const {Data}=this.props;
     callApi(`vehicle?customerId=${Data.custId}`).then((res)=>{
-      console.log("res==",res)
       this.setState({
         data:res.data
       })

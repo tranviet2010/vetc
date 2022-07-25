@@ -49,6 +49,16 @@ export default class Index extends Component {
       [name]: value
     })
   }
+  panigationHandle=(e)=>{
+    let indexPani=e.target.value
+   callApi(`customer-views?limit=${indexPani}`).then((res) => {
+      this.setState({
+        data: res.data.data,
+        totalCount:res.data.totalCount
+      })
+    })
+    
+  }
   searchParam = () => {
     const { phone, giay_to,state } = this.state;
     callApi(`customer-views?mobiNumber=${phone}&idNo=${giay_to}&state=${state}`).then((res) => {
@@ -59,7 +69,7 @@ export default class Index extends Component {
   }
 
   componentDidMount() {
-    callApi(`customer-views`).then((res) => {
+    callApi(`customer-views?limit=10`).then((res) => {
       this.setState({
         data: res.data.data,
         totalCount:res.data.totalCount
@@ -155,12 +165,12 @@ export default class Index extends Component {
         <Row>
           <Col className='d-flex'>
             <span>Xem</span>
-            <select className='add_option'>
-              <option selected>10</option>
-              <option value="1">10</option>
-              <option value="2">20</option>
-              <option value="3">50</option>
-              <option value="4">100</option>
+            <select className='add_option' onChange={this.panigationHandle}>
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
             </select>
             <span> trên tổng số {totalCount} bản ghi</span>
           </Col>

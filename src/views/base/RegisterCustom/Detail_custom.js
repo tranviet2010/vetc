@@ -42,6 +42,7 @@ export default class detail_custom extends Component {
         this.setState({
             checkEdit: false,
         })
+        this.componentDidMount();
     }
     handleBlock = () => {
         const { Data } = this.props
@@ -75,12 +76,9 @@ export default class detail_custom extends Component {
     }
     componentDidMount() {
         callApi(`customer-detail?customerId=${this.props.Data.custId}`).then((res) => {
-            console.log("data==",res)
             this.setState({
                 data: res.data
             })
-
-
         })
     }
     render() {
@@ -112,24 +110,23 @@ export default class detail_custom extends Component {
                                 <Col>
                                     <p>Họ tên: {Data.custName}</p>
                                     <p>Điện thoại: {Data.mobiNumber}</p>
-                                    <p>Email: {Data.email}</p>
+                                    <p>Email: {data.email}</p>
                                     <p>Giới tính: {data.gender == 1 ? "Nam" : "Nữ"}</p>
                                     <p>Ngày sinh: {new Date(data.dob).toLocaleDateString("vi-VN")}</p>
                                     <p>Quốc tịch: {data.nationality}</p>
                                     <p>CMND mặt trước: </p>
                                     <p>CMND mặt sau: </p>
-                                    <p>Ảnh đại diện: </p>
+                                    <p>Ảnh đại diện: {data.avatar!=null || data.avatar!="string"?<img src={data.avatar} width="200" height="200"></img>:''}</p>
 
                                 </Col>
-
                                 <Col>
                                     <p>Giấy tờ tùy thân : {data.idNo}</p>
                                     <p>Ngày cấp: {new Date(data.idIssueDate).toLocaleDateString("vi-VN")}</p>
                                     <p>Nơi cấp: {data.idIssuePlace}</p>
                                     <p>Quê quán: {data.homeTown}</p>
                                     <p>Địa chỉ thường chú: {data.district}</p>
-                                    <p>Loại ví: {data.cusType}</p>
-                                    <p>Tài khoản ví: {data.walletType}</p>
+                                    <p>Loại ví: {data.walletType}</p>
+                                    <p>Tài khoản ví: {data.cusType}</p>
                                     <p>Số dư ví: {data.balance}</p>
                                     <p>Thời gian đăng ký: {new Date(data.createdDate).toLocaleDateString("vi-VN")}</p>
 
