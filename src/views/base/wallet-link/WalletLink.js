@@ -4,9 +4,11 @@ import DetailWallet from "./DetailWallet";
 import DetailTransaction from "./DetailTransaction";
 import Pagination from "react-bootstrap/Pagination";
 import './styleWallet.css';
+import CIcon from "@coreui/icons-react";
+import {cilApple} from '@coreui/icons';
 
 
-export default class Accordion extends Component {
+export default class walletLink extends Component {
   constructor() {
     super();
     this.state = {
@@ -146,7 +148,9 @@ export default class Accordion extends Component {
                   <td>{val.numberAccountOfBank}</td>
                   <td>{val.status}</td>
                   <td>{val.time}</td>
-                  <td href="#" onClick={()=>this.handleClickDetailTransaction(val)}>Chi tiết giao dịch</td>
+                  <td onClick={()=>this.handleClickDetailTransaction(val)}>
+                     <CIcon icon={cilApple} customClassName="nav-icon" height={25} width={25}/>
+                  </td>
                 </tr>
               ))
             }

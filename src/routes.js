@@ -22,10 +22,18 @@ const Progress = React.lazy(() => import('./views/base/progress/Progress'))
 const Spinners = React.lazy(() => import('./views/base/spinners/Spinners'))
 const Tooltips = React.lazy(() => import('./views/base/tooltips/Tooltips'))
 
-
+const ElectronicTransfer = React.lazy(()=> import('./views/base/electronicTransfer/ElectronicTransfer'))
 const CollectPay=React.lazy(()=>import('./views/base/collect_pay'))
 const Report=React.lazy(()=>import('./views/base/report'))
-
+const ReportTransfer=React.lazy(() => import('./views/base/reportTransfer/ReportTransfer'))
+const PaymentGateway=React.lazy(() => import('./views/base/paymentGateway/PaymentGateway'))
+const ReportPayment=React.lazy(() => import('./views/base/reportPayment/ReportPayment'))
+const SuspiciousTransaction=React.lazy(() => import('./views/base/suspiciousTransaction/SuspiciousTransaction'))
+const GuaranteedAccount=React.lazy(() => import('./views/base/guaranteedAccount/GuaranteedAccount'))
+const ReportWallet=React.lazy(() => import('./views/base/reportWallet/ReportWallet'))
+const ReportPeriodic=React.lazy(() => import('./views/base/reportPeriodic/ReportPeriodic'))
+const GuaranteedRaeAccount=React.lazy(() => import('./views/base/guaranteedRaeAccount/GuaranteedRaeAccount'))
+const AccountWallet=React.lazy(() => import('./views/base/accountWallet/AccountWallet'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -52,8 +60,23 @@ const routes = [
   { path: '/base/spinners', name: 'Spinners', element: Spinners },
   { path: '/base/tooltips', name: 'Tooltips', element: Tooltips },
 
+
   { path: 'collect_pay1', name: 'Danh sách giao dịch', element: CollectPay },
+
+  { path: '/base/electronicTransfer', name: 'Danh sách chuyển tiền điện tử', element: ElectronicTransfer },
+  { path: '/base/collect_pay', name: 'Danh sách giao dịch', element: CollectPay },
+
   { path: '/base/report', name: 'Danh sách giao dịch', element: Report },
+  { path: '/base/reportTransfer', name: 'Danh sách giao dịch', element: ReportTransfer},
+  { path: '/base/paymentGateway', name: 'Danh sách giao dịch', element: PaymentGateway},
+  { path: '/base/reportPayment', name: 'Báo cáo giao dịch', element: ReportPayment},
+  { path: '/base/suspiciousTransaction', name: 'Giao dịch nghi ngờ', element: SuspiciousTransaction},
+  { path: '/base/guaranteedAccount', name: 'Tài khoản đảm bảo ví', element: GuaranteedAccount},
+  { path: '/base/reportWallet', name: 'Báo cáo số lượng ví', element: ReportWallet},
+  { path: '/base/reportPeriodic', name: 'Báo cáo ví theo kỳ', element: ReportPeriodic},
+  { path: '/base/guaranteedRaeAccount', name: 'Tài khoản đảm bảo ví', element: GuaranteedRaeAccount},
+  { path: '/base/accountWallet', name: 'Tra cứu tài khoản/ví điện tử hạn chế', element: AccountWallet},
+
 
 
 ]

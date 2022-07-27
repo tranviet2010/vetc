@@ -4,6 +4,7 @@ import { Button, Form, Row, Col } from 'react-bootstrap';
 // import Detail_custom from './Detail_custom';
 import Pagination from 'react-bootstrap/Pagination';
 import '../RegisterCustom/style.css';
+import DetailCollectPay from "./DetailCollectPay";
 
 export default class Index extends Component {
   constructor() {
@@ -163,8 +164,7 @@ export default class Index extends Component {
             </Pagination>
           </Col>
         </Row>
-        {/* {this.state.checkDetail == true ? <Detail_custom Data={dataCheck} onSelectModal={this.onSelectModal} /> : ''}
-        {this.state.addCus == true ? <Add_custom onSelectModal={this.onSelectModal} /> : ""} */}
+        {this.state.checkDetail==true?<DetailCollectPay Data={dataCheck} onSelectModal={this.onSelectModal}/>:''}
 
       </div>
     )

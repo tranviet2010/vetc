@@ -2,6 +2,9 @@ import React, { Component } from 'react'
 import { Button, Form, Row, Col } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import callApi from 'src/api/config';
+import { BiEdit, BiXCircle } from "react-icons/bi";
+import { FcCheckmark, FcCancel } from "react-icons/fc";
+import { IconName } from "react-icons/bi";
 
 export default class Config_positive extends Component {
   constructor(props) {
@@ -14,92 +17,101 @@ export default class Config_positive extends Component {
       checkAdd: false,
       isEdit: false,
       idCheck: [],
-      update:false,
-      minEdit:"",
-      maxEdit:"",
-      verify:"",
-
+      update: false,
+      minEdit: "",
+      maxEdit: "",
+      verify: "VERIFY_PASSWD",
     }
-
   }
   handleInputChange = () => {
     let value = event.target.value;
+    const name = event.target.name;
     this.setState({
       [name]: value
     })
-
   }
   addRow = () => {
     this.setState({
       checkAdd: !this.state.checkAdd
     })
   }
+  cancelRow = () => {
+    this.setState({
+      checkAdd: !this.state.checkAdd
+    })
+  }
   addData = () => {
     let dataSend = {
-      cateId: 0,
+      cateId: "",
       custGroupCode: "",
-      custId: 1,
+      custId: this.props.Data.custId,
       custType: "",
-      id: 0,
+      id: "",
       maxAmount: this.state.to_monney,
       minAmount: this.state.from_monney,
       notes: "",
-      productId: 0,
+      productId: "",
       verifyMethod: this.state.verify
     }
     callApi(`verify-rule-config`, 'POST', dataSend).then((res) => {
       toast("Thêm mới thành công !")
     }).catch((err) => {
-
+      toast.error("Thêm mới thất bại !")
     })
   }
   isEditData = (val) => {
-
     this.setState({
       isEdit: true,
       idCheck: val,
-      update:true
+      update: true
     })
+
+
   }
-  isDestroy=()=>{
+  isDestroy = () => {
     this.setState({
-      update:false
+      update: false,
+      isEdit: false
     })
   }
-  handleInputEdit=()=>{
-    let value=event.target.value;
-    const name = event.target.name;
-    console.log("value",value)
+  handleInputEdit = () => {
+    let value = event.target.value;
+    let name = event.target.name;
     this.setState({
-      [name]:value
+      [name]: value
     })
   }
-  isUpdate=()=>{
-    const {idCheck}=this.state;
-    let dataUpdate={
-        cateId: idCheck.cateId,
-        custGroupCode: "",
-        custId: idCheck.custId,
-        custType: "",
-        id: 2,
-        maxAmount: this.state.maxEdit.length==0?idCheck.maxAmount:this.state.maxEdit,
-        minAmount: this.state.minEdit.length==0?idCheck.minAmount:this.state.minEdit,
-        notes: "note",
-        productId: 0,
-        verifyMethod: this.state.verify.length==0?idCheck.verifyMethod:this.state.verify,
+  isUpdate = () => {
+    const { idCheck } = this.state;
+    let dataUpdate = {
+      cateId: idCheck.cateId,
+      custGroupCode: "",
+      custId: idCheck.custId,
+      custType: "",
+      id: "",
+      maxAmount: this.state.maxEdit.length == 0 ? idCheck.maxAmount : this.state.maxEdit,
+      minAmount: this.state.minEdit.length == 0 ? idCheck.minAmount : this.state.minEdit,
+      notes: "note",
+      productId: "",
+      verifyMethod: this.state.verify.length == 0 ? idCheck.verifyMethod : this.state.verify,
     }
-    callApi(`verify-rule-config`,'PUT',dataUpdate).then((res)=>{
-      console.log("res===",res)
+    callApi(`verify-rule-config`, 'PUT', dataUpdate).then((res) => {
       toast("Cập nhật thành công !")
-    }).catch((err)=>{
+    }).catch((err) => {
       toast.error("Cập nhật thất bại !")
     })
   }
-  isDeleteData=()=>{
-
+  isDeleteData = (e) => {
+    const { idCheck } = this.state
+    callApi(`verify-rule-confige?verify_rule_config_id=${e}`, 'DELETE').then((res) => {
+      toast("Cập nhật thành công !")
+    }).catch((err) => {
+      toast.error("Cập nhật thất bại !")
+    })
   }
   componentDidMount() {
-    callApi(`verify-rule-config?custId=1`).then((res) => {
+    const {Data}=this.props;
+    callApi(`verify-rule-config?custId=${Data.custId}`).then((res) => {
       this.setState({
         data: res.data
       })
@@ -109,7 +121,6 @@ export default class Config_positive extends Component {
   }
   render() {
     const { data, checkAdd, isEdit, idCheck, update } = this.state;
-    console.log("data==", this.state)
     return (
       <div>
         <div className='d-flex justify-content-end mb-2'>
@@ -137,29 +148,30 @@ export default class Config_positive extends Component {
                       <option value="OPT_SMS">Xác thực tin nhắn</option>
                     </select>
                   </td>
-                  <td>
-                    <Button variant="success" className='button_right color_white' onClick={this.addData}>Thêm mới</Button>
+                  <td className='d-flex justify-content-evenly chi_tiet'>
+                    <p onClick={this.addData}><FcCheckmark /></p>
+                    <p onClick={this.cancelRow}><FcCancel /></p>
                   </td>
                 </tr> : ''
               }
               {
-                data.map((val, index) => (
+                data.length&&data.map((val, index) => (
                   <tr className="last_tr" key={index}>
                     <th >
-                      {isEdit && idCheck.id == val.id ? <input type="text" name='minEdit' defaultValue={val.minAmount} onChange={this.handleInputEdit}/> : val.minAmount}
+                      {isEdit && idCheck.id == val.id ? <input type="text" name='minEdit' defaultValue={val.minAmount} onChange={this.handleInputEdit} /> : val.minAmount}
                     </th>
-                    <td>{isEdit && idCheck.id == val.id ? <input type="text" name='maxEdit' defaultValue={val.maxAmount} onChange={this.handleInputEdit}/> : val.maxAmount}</td>
+                    <td>{isEdit && idCheck.id == val.id ? <input type="text" name='maxEdit' defaultValue={val.maxAmount} onChange={this.handleInputEdit} /> : val.maxAmount}</td>
                     <td>{isEdit && idCheck.id == val.id ? <select name="verify" id="cars" form="carform" onChange={this.handleInputEdit}>
                       <option value="VERIFY_PASSWD">Xác thực mật khẩu</option>
                       <option value="OPT_SMS">Xác thực tin nhắn</option>
                     </select> : val.verifyMethod}</td>
-                    {!update?<td className='d-flex justify-content-around chi_tiet'>
-                      <p onClick={() => this.isEditData(val)}>Sửa</p>
-                      <p onClick={()=>this.isDeleteData(val.id)}>Xóa</p>
-                    </td>:<td className='d-flex justify-content-around chi_tiet'>
-                            <p onClick={this.isUpdate}>Cập nhật</p>
-                            <p onClick={this.isDestroy}>Hủy</p>
-                          </td>
+                    {update && idCheck.id == val.id ? <td className='d-flex justify-content-around chi_tiet'>
+                      <p onClick={this.isUpdate}>Cập nhật</p>
+                      <p onClick={this.isDestroy}>Hủy</p>
+                    </td> : <td className='d-flex justify-content-evenly chi_tiet'>
+                      <p onClick={() => this.isEditData(val)}><BiEdit /></p>
+                      <p onClick={() => this.isDeleteData(val.id)}><BiXCircle /></p>
+                    </td>
                     }
                   </tr>
                 ))

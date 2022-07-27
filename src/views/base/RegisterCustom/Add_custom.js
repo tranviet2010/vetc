@@ -9,6 +9,8 @@ import callApi from 'src/api/config';
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { CheckMail, CheckText, PhoneNumber } from 'src/views/helper/validate';
+import { CFormInput, CForm, CButton } from '@coreui/react';
 
 var axios = require('axios');
 
@@ -32,6 +34,13 @@ export default class Add_custom extends Component {
             district: "",
             cmnd_mt: "",
             type_wall: "",
+            male: "",
+            avatar: "",
+            idNoFont: "",
+            idNoBack: "",
+            phoneCheck: false,
+            checkText: false,
+            validated :false
         }
     }
     handleClose = () => {
@@ -49,193 +58,191 @@ export default class Add_custom extends Component {
         })
     }
     sendForm = () => {
-        // if(this.state.fullname.length==0){
-        //     toast.error("Vui lòng nhập họ và tên !")
-        //     return
-        // }
+        const form = event.currentTarget
+        if (form.checkValidity() === false) {
+            event.preventDefault()
+            event.stopPropagation()
+        }
+        this.setState({
+            validated :true
+        })
         let data = {
             address: this.state.thuong_tru,
-            avatar: "https://fridaycat.com.vn/wp-content/uploads/2021/04/meo-muop-giong-meo-pho-bien-tren-the-gioi.jpg",
-            busPermitIssueDate: "",
-            busPermitNo: "",
-            checkerAt: "",
-            checkerId: 0,
-            createdBy: "admin",
-            createdDate: new Date(),
-            cusKind: "",
-            cusType: "INDIV",
-            custNo: "",
-            district: "",
+            avatar: this.state.avatar,
             dob: this.state.birthday,
             email: this.state.email,
-            fax: "",
-            gender: 0,
-            id: 0,
+            gender: this.state.male,
+            homeTow: "string",
             idIssueDate: this.state.date_create,
             idIssuePlace: this.state.noi_cap,
             idNo: this.state.giayto,
-            invCycleEffectDate: "2022-07-21",
-            invoiceCycleType: 0,
-            lastModifiedDate: "2022-07-21",
-            linkInvite: "string",
-            makerAt: "2022-07-21",
-            makerId: 0,
+            idNoBack: this.state.idNoBack,
+            idNoFont: this.state.idNoFont,
             mobiNumber: this.state.phone,
             name: this.state.fullname,
-            nameSearch: "",
             nationality: "Việt Nam",
-            parentId: 0,
-            precinct: "string",
-            province: "string",
-            qrcode: "string",
-            ranking: 0,
-            repreDob: "2022-07-21",
-            repreGender: "string",
-            repreIdIssueDate: "2022-07-21",
-            repreIdIssuePlace: "string",
-            repreIdNo: "string",
-            repreMobiNumber: "string",
-            repreName: "string",
-            repreNationality: "string",
-            rootId: 0,
-            state: "OPEN",
-            status: 1,
-            tin: "string",
-            tinEffectedDate: "2022-07-21",
-            vectState: "string",
-            verifyState: "string",
-            vetcAccount: "string",
-            male: ""
+            walletTypeId: this.state.type_wall
         }
-        callApi(`customer`, 'POST', data).then((res) => {
+        callApi(`wallet`, 'POST', data).then((res) => {
             if (res.status == 200) {
                 toast("Thêm mới thành công !")
             } else {
-
-            }
-
-        })
-            .catch((error) => {
                 toast.error("Lỗi hệ thống !")
-            })
+            }
+        })
+        // .catch((res) => {
+        //     console.log("ress==",res)
+        //     toast.error("Lỗi hệ thống !")
+        // })
     }
     handleInputDate = (e) => {
 
     }
-    handleFile = (event) => {
-        let selectedFile = event.target.files[0]
-
+    handleFile = (e, index) => {
+        let selectedFile = e.target.files[0]
         const formData = new FormData();
-
-        // Update the formData object 
-        formData.append(
-            "myFile",
-            selectedFile,
-            selectedFile.name
-        );
-
-        // Details of the uploaded file 
-        console.log(this.state.selectedFile);
-
-        // Request made to the backend api 
-        // Send formData object 
-        axios.post("http://10.101.243.21:8088/api/images", formData).then((res)=>{
-    
+        // formData.append("member_id", "1");
+        formData.append("files", selectedFile);
+        var config = {
+            method: 'post',
+            url: 'http://10.101.243.21:8088/api/images',
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            },
+            data: formData
+        };
+        axios(config).then((res) => {
+            if (index == 1) {
+                this.setState({
+                    avatar: res.data[0]
+                })
+            } else if (index == 2) {
+                this.setState({
+                    idNoFont: res.data[0]
+                })
+            } else {
+                this.setState({
+                    idNoBack: res.data[0]
+                })
+            }
         })
     };
+    render() {
+        const { show, phoneCheck,validated  } = this.state;
+        const { Data } = this.props;
+        console.log("test", PhoneNumber(this.state.phone))
+        return (
+            <CForm
+                noValidate
+                validated={validated}
+                onSubmit={this.sendForm}
+            >
+            <div>
+                <ToastContainer />
+                <Modal show={show} onHide={this.handleClose} size='xl'>
+                    <Modal.Header>
+                        <Modal.Title>Đăng ký ví</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
 
-render() {
-    const { show } = this.state;
-    const { Data } = this.props;
-    return (
-        <div>
-            <ToastContainer />
-            <Modal show={show} onHide={this.handleClose} size='xl'>
-                <Modal.Header>
-                    <Modal.Title>Đăng ký ví</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
+                        <div className='border_button'>
+                            <Row>
+                                <Col>
+                                    <table className="table table-bordered">
 
-                    <div className='border_button'>
-                        <Row>
-                            <Col>
-                                <table className="table table-bordered">
-
-                                    <tbody className="">
-                                        <tr className="">
-                                            <td>Họ tên:</td>
-                                            <td><input type="text" name="fullname" placeholder='Nhập họ và tên...' onChange={this.handleInputChange}></input></td>
-                                            <td>Loại ví:</td>
-                                            <td>
-                                                <select name="type_wall" id="cars" disabled form="carform" onChange={this.handleInputChange}>
-                                                    <option value="Cá nhân">Cá nhân</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr className="">
-                                            <td>Điện thoại:</td>
-                                            <td><input type="text" name="phone" placeholder='Nhập số điện thoại...' onChange={this.handleInputChange}></input></td>
-                                            <td>Giấy tờ tùy thân:</td>
-                                            <td><input type="text" name="giayto" placeholder='Nhập giấy tờ tùy thân...' onChange={this.handleInputChange}></input></td>
-                                        </tr>
-                                        <tr className="">
-                                            <td>Email:</td>
-                                            <td><input type="text" name="email" placeholder='Nhập email...' onChange={this.handleInputChange}></input></td>
-                                            <td>Ngày cấp:</td>
-                                            <td><input type="date" name="date_create" placeholder='Nhập ngày cấp...' onChange={this.handleInputChange}></input></td>
-                                        </tr>
-                                        <tr className="">
-                                            <td>Giới tính:</td>
-                                            <td><select name="male" id="cars" form="carform" onChange={this.handleInputChange}>
-                                                <option value="1">Nam</option>
-                                                <option value="2">Nữ</option>
-                                            </select></td>
-                                            <td>Nơi cấp:</td>
-                                            <td><input type="text" name="noi_cap" placeholder='Nhập nơi cấp...' onChange={this.handleInputChange}></input></td>
-                                        </tr>
-                                        <tr className="">
-                                            <td>Ngày sinh:</td>
-                                            <td><input type="date" name="birthday" placeholder='Nhập họ và tên...' onChange={this.handleInputChange}></input></td>
-                                            <td>Địa chỉ thường trú:</td>
-                                            <td><input type="text" name="thuong_tru" placeholder='Nhập địa chỉ thường chú...' onChange={this.handleInputChange}></input></td>
-                                        </tr>
-                                        <tr className="">
-                                            <td>CMND mặt trước:</td>
-                                            <td><input type="file"></input></td>
-                                            <td>Quê quán:</td>
-                                            <td><input type="text" name="district" placeholder='Nhập quê quán...' onChange={this.handleInputChange}></input></td>
-                                        </tr>
-                                        <tr className="">
-                                            <td>CMND mặt sau:</td>
-                                            <td><input type="file" name="cmnd_mt" onChange={this.handleFile}></input></td>
-                                            <td>Quốc tịch:</td>
-                                            <td><input type="text" name="typeWall" placeholder='Nhập email...' onChange={this.handleInputChange}></input></td>
-                                        </tr>
-                                        <tr className="">
-                                            <td></td>
-                                            <td></td>
-                                            <td>Ảnh đại diện:</td>
-                                            <td><input type="file" name="typeWall" ></input></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </Col>
-                        </Row>
-                    </div>
-                    {/* <div className='last_tr'>
+                                        <tbody className="">
+                                            <tr className="">
+                                                <td>Họ tên:</td>
+                                                <td>
+                                                    <input type="text" name="fullname" placeholder='Nhập họ và tên...' onChange={this.handleInputChange}></input>
+                                                    <CFormInput
+                                                        type="text"
+                                                        id="validationServer01"
+                                                        label="Email"
+                                                        feedback="Looks good!"
+                                                        defaultValue="name@surname.com"
+                                                        valid
+                                                        required
+                                                        />
+                                                </td>
+                                                <td>Loại ví:</td>
+                                                <td>
+                                                    <select name="type_wall" id="cars" form="carform" onChange={this.handleInputChange}>
+                                                        <option value="1">Cá nhân</option>
+                                                        <option value="2">Tổ chức</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr className="">
+                                                <td>Điện thoại:</td>
+                                                <td>
+                                                    <input type="phone" name="phone" placeholder='Nhập số điện thoại...' onChange={this.handleInputChange}></input>
+                                                </td>
+                                                <td>Giấy tờ tùy thân:</td>
+                                                <td><input type="text" name="giayto" placeholder='Nhập giấy tờ tùy thân...' onChange={this.handleInputChange}></input></td>
+                                            </tr>
+                                            <tr className="">
+                                                <td>Email:</td>
+                                                <td><input type="text" name="email" placeholder='Nhập email...' onChange={this.handleInputChange}></input></td>
+                                                <td>Ngày cấp:</td>
+                                                <td><input type="date" name="date_create" placeholder='Nhập ngày cấp...' onChange={this.handleInputChange}></input></td>
+                                            </tr>
+                                            <tr className="">
+                                                <td>Giới tính:</td>
+                                                <td><select name="male" id="cars" form="carform" onChange={this.handleInputChange}>
+                                                    <option value="1">Nam</option>
+                                                    <option value="2">Nữ</option>
+                                                </select></td>
+                                                <td>Nơi cấp:</td>
+                                                <td><input type="text" name="noi_cap" placeholder='Nhập nơi cấp...' onChange={this.handleInputChange}></input></td>
+                                            </tr>
+                                            <tr className="">
+                                                <td>Ngày sinh:</td>
+                                                <td><input type="date" name="birthday" placeholder='Nhập họ và tên...' onChange={this.handleInputChange}></input></td>
+                                                <td>Địa chỉ thường trú:</td>
+                                                <td><input type="text" name="thuong_tru" placeholder='Nhập địa chỉ thường chú...' onChange={this.handleInputChange}></input></td>
+                                            </tr>
+                                            <tr className="">
+                                                <td>CMND mặt trước:</td>
+                                                <td><input type="file" onChange={event => this.handleFile(event, 2)}></input></td>
+                                                <td>Quê quán:</td>
+                                                <td><input type="text" name="district" placeholder='Nhập quê quán...' onChange={this.handleInputChange}></input></td>
+                                            </tr>
+                                            <tr className="">
+                                                <td>CMND mặt sau:</td>
+                                                <td><input type="file" name="cmnd_mt" onChange={event => this.handleFile(event, 3)}></input></td>
+                                                <td>Quốc tịch:</td>
+                                                <td><input type="text" name="typeWall" value="Việt Nam" disabled placeholder='Nhập email...' onChange={this.handleInputChange}></input></td>
+                                            </tr>
+                                            <tr className="">
+                                                <td></td>
+                                                <td></td>
+                                                <td>Ảnh đại diện:</td>
+                                                <td><input type="file" name="typeWall" onChange={event => this.handleFile(event, 1)}></input></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </Col>
+                            </Row>
+                        </div>
+                        {/* <div className='last_tr'>
                             <Button variant="success" className='w-20 mt-2'>Đăng ký</Button>
                         </div> */}
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary color_white" onClick={this.handleClose}>
-                        Đóng
-                    </Button>
-                    <Button variant="success color_white" onClick={this.sendForm}>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary color_white" onClick={this.handleClose}>
+                            Đóng
+                        </Button>
+                        {/* <Button variant="success color_white" onClick={this.sendForm}>
+                            Đăng ký
+                        </Button> */}
+                        <CButton color="primary" type="submit">
                         Đăng ký
-                    </Button>
-                </Modal.Footer>
-            </Modal>
-        </div>
-    )
-}
+                        </CButton>
+                    </Modal.Footer>
+                </Modal>
+            </div>
+            </CForm >
+        )
+    }
 }

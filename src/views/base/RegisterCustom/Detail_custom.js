@@ -114,9 +114,9 @@ export default class detail_custom extends Component {
                                     <p>Giới tính: {data.gender == 1 ? "Nam" : "Nữ"}</p>
                                     <p>Ngày sinh: {new Date(data.dob).toLocaleDateString("vi-VN")}</p>
                                     <p>Quốc tịch: {data.nationality}</p>
-                                    <p>CMND mặt trước: </p>
-                                    <p>CMND mặt sau: </p>
-                                    <p>Ảnh đại diện: {data.avatar!=null || data.avatar!="string"?<img src={data.avatar} width="200" height="200"></img>:''}</p>
+                                    <p>CMND mặt trước: {data.idNoFont!=null ?<img src={data.idNoFont} width="200" height="200"></img>:''}</p>
+                                    <p>CMND mặt sau: {data.idNoBack!=null ?<img src={data.idNoBack} width="200" height="200"></img>:''}</p>
+                                    <p>Ảnh đại diện: {data.avatar!=null ?<img src={data.avatar} width="200" height="200"></img>:''}</p>
 
                                 </Col>
                                 <Col>
@@ -143,10 +143,10 @@ export default class detail_custom extends Component {
                                     <Info_Car Data={this.props.Data} />
                                 </Tab>
                                 <Tab eventKey="profit" title="Cấu hình hạn mức">
-                                    <Config_level />
+                                    <Config_level Data={this.props.Data}/>
                                 </Tab>
                                 <Tab eventKey="contact" title="Cấu hình xác thực">
-                                    <Config_positive />
+                                    <Config_positive Data={this.props.Data}/>
                                 </Tab>
                             </Tabs>
                         </div>

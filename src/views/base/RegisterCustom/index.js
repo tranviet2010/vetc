@@ -5,6 +5,8 @@ import Detail_custom from './Detail_custom';
 import Pagination from 'react-bootstrap/Pagination';
 import './style.css';
 import callApi from 'src/api/config';
+import { BiInfoCircle } from "react-icons/bi";
+import { ValidateDate } from 'src/views/helper/validate';
 
 
 export default class Index extends Component {
@@ -20,6 +22,8 @@ export default class Index extends Component {
       addCus: false,
       dataCheck: [],
       totalCount:"",
+      toDate:"",
+      fromDate:""
 
     };
   }
@@ -60,14 +64,14 @@ export default class Index extends Component {
     
   }
   searchParam = () => {
-    const { phone, giay_to,state } = this.state;
-    callApi(`customer-views?mobiNumber=${phone}&idNo=${giay_to}&state=${state}`).then((res) => {
+    const { phone, giay_to,state,toDate, fromDate } = this.state;
+    console.log("fromdate",ValidateDate(fromDate))
+    callApi(`customer-views?mobiNumber=${phone}&idNo=${giay_to}&state=${state}&createdDate=gt:${ValidateDate(toDate)}&createdDate=lt<${ValidateDate(fromDate)}`).then((res) => {
       this.setState({
         data: res.data.data
       })
     })
   }
-
   componentDidMount() {
     callApi(`customer-views?limit=10`).then((res) => {
       this.setState({
@@ -95,12 +99,12 @@ export default class Index extends Component {
         <Row>
           <Col>
             <div className="input-group">
-              <input type="date" className="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
+              <input type="date" className="form-control" name="toDate" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" onChange={this.handleInputChange}/>
             </div>
           </Col>
           <Col>
             <div className="input-group mb-3">
-              <input type="date" className="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" />
+              <input type="date" className="form-control" name='fromDate' placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" onChange={this.handleInputChange}/>
             </div>
           </Col>
           <Col>
@@ -143,7 +147,7 @@ export default class Index extends Component {
             </thead>
             <tbody className="table-group-divider text-center">
               {
-                data.length==0?<tr className="last_tr"><p>Trống</p></tr>:
+                // data.length==0?<tr className="last_tr"><p>Trống</p></tr>:
                 data.map((val, index) => (
                   <tr className="last_tr" key={index}>
                     <th scope="row">{index + 1}</th>
@@ -155,7 +159,7 @@ export default class Index extends Component {
                     <td>{val.walletType}</td>
                     <td>{val.state}</td>
                     <td>{new Date(val.createdDate).toLocaleDateString("vi-VN")}</td>
-                    <td href="#" onClick={() => this.handleClick(val)} className="chi_tiet">Chi tiết</td>
+                    <td href="#" onClick={() => this.handleClick(val)} className="chi_tiet"><BiInfoCircle /></td>
                   </tr>
                 ))
               }
