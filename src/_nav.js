@@ -1,8 +1,7 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
 import {
-  cilPuzzle,
-  cilSpeedometer, cilWallet,
+  cilCash, cilNotes, cilTransfer, cilWallet, cilWarning,
 } from '@coreui/icons'
 import { CNavGroup, CNavItem } from '@coreui/react'
 
@@ -21,7 +20,7 @@ const _nav = [
     component: CNavGroup,
     name: 'Quản lý ví điện tử',
     to: '/base',
-    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilWallet} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -31,7 +30,7 @@ const _nav = [
       {
         component: CNavItem,
         name: 'Liên kết ví',
-        to: '/base/wallet-link',
+        to: '/base/walletLink',
       },
       {
         component: CNavItem,
@@ -60,7 +59,7 @@ const _nav = [
     component: CNavGroup,
     name: 'Báo cáo ví',
     to: '/base',
-    icon: <CIcon icon={cilWallet} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilNotes} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -72,19 +71,46 @@ const _nav = [
         name: 'Báo cáo ví theo kỳ',
         to: '/base/reportPeriodic',
       },
+      {
+        component: CNavItem,
+        name: 'Top ví theo số lượng/giá trị',
+        to: '/base/topWalletByQuantity',
+      },
+      {
+        component: CNavItem,
+        name: 'Tình hình cung ứng',
+        to: '/base/supplySituation',
+      },
+
+      {
+        component: CNavItem,
+        name: 'báo cáo 2 bên',
+        to: '/base/reportPeriodic/reportTwoPay',
+      },
+      {
+        component: CNavItem,
+        name: 'top 10 nạp',
+        to: '/base/topWalletByQuantity/topRechargeWithdraw',
+      },
+      {
+        component: CNavItem,
+        name: 'top 10 rút',
+        to: '/base/topWalletByQuantity/topRechargeWithdraw',
+      },
+
     ],
   },
 
   {
     component: CNavGroup,
     name: 'Thu hộ - chi hộ',
-    to: 'collect_pay',
-    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+    to: '/base',
+    icon: <CIcon icon={cilCash} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
         name: 'Danh sách giao dịch',
-        to: 'collect_pay1',
+        to: '/base/collectPay',
       },
     ],
   },
@@ -92,7 +118,7 @@ const _nav = [
     component: CNavGroup,
     name: 'Báo cáo',
     to: '/base',
-    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilNotes} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -104,6 +130,11 @@ const _nav = [
         name: 'Báo cáo chuyển tiền',
         to: '/base/reportTransfer',
       },
+      {
+        component: CNavItem,
+        name: 'Báo cáo cổng thanh toán',
+        to: '/base/reportPayment',
+      },
     ],
   },
 
@@ -111,7 +142,7 @@ const _nav = [
     component: CNavGroup,
     name: 'Chuyển tiền điện tử',
     to: '/base',
-    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilTransfer} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -125,18 +156,14 @@ const _nav = [
     component: CNavGroup,
     name: 'Cổng thanh toán',
     to: '/base',
-    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilWallet} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
         name: 'Danh sách giao dịch',
         to: '/base/paymentGateway',
       },
-      {
-        component: CNavItem,
-        name: 'Báo cáo',
-        to: '/base/reportPayment',
-      },
+
     ],
   },
 
@@ -144,7 +171,7 @@ const _nav = [
     component: CNavGroup,
     name: 'Tình hình rủi ro',
     to: '/base',
-    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilWarning} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,
@@ -159,7 +186,7 @@ const _nav = [
     component: CNavGroup,
     name: 'Tài khoản đảm bảo ví',
     to: '/base',
-    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilWallet} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,

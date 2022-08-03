@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { Button, Form, Row, Col } from 'react-bootstrap';
+import CIcon from "@coreui/icons-react";
+import {cilDataTransferDown, cilSearch} from "@coreui/icons";
 
 export default class reportTwoParty extends Component {
   constructor(props){
@@ -18,17 +20,17 @@ export default class reportTwoParty extends Component {
   render() {
     const {data} = this.state;
     return (
-      <div>
+      <div className='backGround_main'>
         <Col>
           <b>Báo cáo Ví theo giao dịch 2 bên</b>
         </Col>
+        <br/>
         <Row>
-          <Col>Loại báo cáo:</Col>
-          <Col>
+          <Col xs="2" style={{width:"10%"}}>Loại báo cáo:</Col>
+          <Col xs="4">
             <select className="form-select" aria-label="Default select example">
               <option selected>Số lượng và giá trị Ví theo kỳ thống kê</option>
               <option value="1">Số lượng và giá trị giao dịch 2 bên</option>
-
             </select>
           </Col>
           <Col>
@@ -42,9 +44,21 @@ export default class reportTwoParty extends Component {
             </div>
           </Col>
           <Col>
-            <Button variant="success" style={{ color: "#fff", marginLeft:"10px"}}  >Tìm kiếm</Button>
-
-            <Button variant="success" className="color_white" style={{marginLeft:"10px"}}>Xuất excel</Button>
+            <Button variant="success" style={{ color: "#fff",float:"right"}} >
+              <CIcon icon={cilSearch} customClassName="nav-icon" style={{width:"20px", height:"20px"}} /> Tìm kiếm</Button>
+          </Col>
+          <Col>
+            <Button variant="success" className="color_white" style={{float:"right"}}>
+              <CIcon icon={cilDataTransferDown} customClassName="nav-icon" style={{width:"20px", height:"20px"}} /> Xuất excel</Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs="2" style={{width:"10%"}}>Ngân hàng:</Col>
+          <Col xs="2">
+            <select className="form-select" aria-label="Default select example">
+              <option selected>Vietinbank</option>
+              <option value="1">BIDV</option>
+            </select>
           </Col>
         </Row>
         <Row>
@@ -53,26 +67,23 @@ export default class reportTwoParty extends Component {
             <thead className="last_right">
             <tr>
               <th scope="col">Ngày</th>
-              <th scope="col" colSpan="2">Nạp tiền</th>
-              <th scope="col" colSpan="2">Rút tiền</th>
-              <th scope="col" colSpan="2">Chuyển tiền</th>
-              <th scope="col" colSpan="2">Thanh toán</th>
-              <th scope="col" colSpan="2">Giao dịch khác</th>
+              <th scope="col" colSpan="4">Bên nợ</th>
+              <th scope="col" colSpan="4">Bên có</th>
+              <th scope="col">Chênh lệch nợ/có</th>
             </tr>
             </thead>
             <thead className="table-group-bordered">
             <tr className="last_right">
               <td></td>
               <td>Số lượng</td>
-              <td>Tổng giá trị</td>
+              <td>Giá trị GD (2)</td>
+              <td>Phí (3)</td>
+              <td>Tổng cộng (4)=(2)+(3)</td>
               <td>Số lượng</td>
-              <td>Tổng giá trị</td>
-              <td>Số lượng</td>
-              <td>Tổng giá trị</td>
-              <td>Số lượng</td>
-              <td>Tổng giá trị</td>
-              <td>Số lượng</td>
-              <td>Tổng giá trị</td>
+              <td>Giá trị GD (5)</td>
+              <td>Phí (6)</td>
+              <td>Tổng cộng (7)=(5)+(6)</td>
+              <td>(8)=(7)-(4)</td>
             </tr>
             </thead>
             <tbody className="table-group-divider">
@@ -89,13 +100,11 @@ export default class reportTwoParty extends Component {
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td></td>
                 </tr>
               ))
             }
             </tbody>
           </table>
-
         </Row>
       </div>
     )

@@ -1,0 +1,10 @@
+
+.button_chi_tiet{
+  background: none;
+  border-radius: 7px;
+  border-color: #0c9f4f;
+}
+.button_chi_tiet:hover{
+  background-color: #0c9f4f;
+  color: #ffffff;
+}

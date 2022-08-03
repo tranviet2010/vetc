@@ -5,6 +5,8 @@ import Pagination from "react-bootstrap/Pagination";
 import DetailPay from "./DetailPay";
 
 import "./stylePay.css";
+import CIcon from "@coreui/icons-react";
+import {cilDataTransferDown, cilSearch} from "@coreui/icons";
 
 
 
@@ -14,8 +16,8 @@ export default class pay extends Component {
     super();
     this.state = {
       data: [
-        {numberAccountOfWallet: "", maGd: "2021123456789", maHd: "FT000123456789", money: "100.000",status: "Thành công",service: "", supplier:"",  date: "07/12/2022 10:12" },
-        {numberAccountOfWallet: "", maGd: "2021987654321", maHd: "FT000198765432", money: "50.000.000",status: "Không thành công",service: "", supplier:"",  date: "07/12/2022 11:12" },
+        {numberAccountOfWallet: "", maGd: "2021123456789", maHd: "FT000123456789", money: "100.000",status: "Thành công",service: "Mua vé tháng", supplier:"",  date: "07/12/2022 10:12" },
+        {numberAccountOfWallet: "", maGd: "2021987654321", maHd: "FT000198765432", money: "50.000.000",status: "Không thành công",service: "Thanh toán qua trạm", supplier:"",  date: "07/12/2022 11:12" },
       ],
       numberAccountOfWallet: "",
       checkDetailPay:false,
@@ -75,7 +77,7 @@ export default class pay extends Component {
           </Col>
           <Col>
             <select className="form-select" aria-label="Default select example">
-              <option selected>Trạng thái</option>
+              <option selected disabled="disabled">Trạng thái</option>
               <option value="1">Thành công</option>
               <option value="2">Thất bại</option>
               <option value="3">Đang xử lý</option>
@@ -85,7 +87,7 @@ export default class pay extends Component {
 
           <Col>
             <select className="form-select" aria-label="Default select example">
-              <option selected>Dịch vụ</option>
+              <option selected disabled="disabled">Dịch vụ</option>
               <option value="1">Thanh toán qua trạm</option>
               <option value="2">Mua vé tháng</option>
               <option value="3">Nạp tiền điện thoại</option>
@@ -93,10 +95,12 @@ export default class pay extends Component {
           </Col>
 
           <Col>
-            <Button variant="success" style={{ color: "#fff" }} className="button_flex">Tìm kiếm</Button>
+            <Button variant="success" style={{ color: "#fff", float:"left", marginLeft:"-5px"}} >
+              <CIcon icon={cilSearch} customClassName="nav-icon" style={{width:"20px", height:"20px"}} /> Tìm kiếm</Button>
           </Col>
           <Col>
-            <Button variant="success" className="color_white button_flex">Xuất excel</Button>
+            <Button variant="success" className="color_white" style={{float:"left", marginLeft:"-10px"}}>
+              <CIcon icon={cilDataTransferDown} customClassName="nav-icon" style={{width:"20px", height:"20px"}} /> Xuất excel</Button>
           </Col>
 
         </Row>
@@ -113,23 +117,25 @@ export default class pay extends Component {
               <th scope="col">Dịch vụ</th>
               <th scope="col">Nhà cung cấp</th>
               <th scope="col">Ngày GD</th>
-              <th scope="col">Hành động</th>
+              <th scope="col">Tác vụ</th>
             </tr>
             </thead>
             <tbody className="table-group-divider">
             {
               data.map((val, index) => (
-                <tr className="last_tr">
+                <tr className="last_tr" >
                   <th scope="row">{index + 1}</th>
                   <td>{val.numberAccountOfWallet}</td>
                   <td>{val.maGd}</td>
                   <td>{val.maHd}</td>
-                  <td>{val.money}</td>
+                  <td className="number">{val.money}</td>
                   <td>{val.status}</td>
-                  <td>{val.service}</td>
-                  <td>{val.supplier}</td>
+                  <td className="text">{val.service}</td>
+                  <td className="text">{val.supplier}</td>
                   <td>{val.date}</td>
-                  <td href="#" onClick={()=>this.handleClickDetailPay(val)}>Chi tiết thanh toán</td>
+                  <td >
+                    <button onClick={()=>this.handleClickDetailPay(val)} className="button_chi_tiet">Xem chi tiết</button>
+                  </td>
                 </tr>
               ))
             }
@@ -141,8 +147,8 @@ export default class pay extends Component {
             <span>Xem</span>
             <select className='add_option'>
               <option selected>10</option>
-              <option value="1">10</option>
-              <option value="2">20</option>
+              <option value="1">20</option>
+              <option value="2">30</option>
               <option value="3">50</option>
               <option value="4">100</option>
             </select>

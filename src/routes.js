@@ -6,7 +6,7 @@ const Typography = React.lazy(() => import('./views/theme/typography/Typography'
 
 // Base
 const RegisterCustom = React.lazy(() => import('./views/base/RegisterCustom'))
-const WalletLink = React.lazy(()=> import('./views/base/wallet-link/WalletLink'))
+const WalletLink = React.lazy(()=> import('./views/base/walletLink/WalletLink'))
 const RechargeMoney = React.lazy(()=> import('./views/base/rechargeMoney/Recharge'))
 const WithdrawMoney = React.lazy(()=> import('./views/base/withdrawMoney/WithdrawMoney'))
 const TransferMoney = React.lazy(()=> import('./views/base/transferMoney/TransferMoney'))
@@ -23,7 +23,7 @@ const Spinners = React.lazy(() => import('./views/base/spinners/Spinners'))
 const Tooltips = React.lazy(() => import('./views/base/tooltips/Tooltips'))
 
 const ElectronicTransfer = React.lazy(()=> import('./views/base/electronicTransfer/ElectronicTransfer'))
-const CollectPay=React.lazy(()=>import('./views/base/collect_pay'))
+const CollectPay=React.lazy(()=>import('./views/base/collectPay'))
 const Report=React.lazy(()=>import('./views/base/report'))
 const ReportTransfer=React.lazy(() => import('./views/base/reportTransfer/ReportTransfer'))
 const PaymentGateway=React.lazy(() => import('./views/base/paymentGateway/PaymentGateway'))
@@ -35,6 +35,14 @@ const ReportPeriodic=React.lazy(() => import('./views/base/reportPeriodic/Report
 const GuaranteedRaeAccount=React.lazy(() => import('./views/base/guaranteedRaeAccount/GuaranteedRaeAccount'))
 const AccountWallet=React.lazy(() => import('./views/base/accountWallet/AccountWallet'))
 
+const TopWalletByQuantity=React.lazy(() => import('./views/base/topWalletByQuantity/TopWalletByQuantity'))
+const SupplySituation=React.lazy(() => import('./views/base/supplySituation/index'))
+
+const ReportTwoPay=React.lazy(() => import('./views/base/reportPeriodic/reportTwoParty/ReportTwoParty'))
+const TopRecharge=React.lazy(() => import('./views/base/topWalletByQuantity/topRechargeWithdraw/TopRecharge'))
+const TopWithdraw=React.lazy(() => import('./views/base/topWalletByQuantity/topRechargeWithdraw/TopWithdraw'))
+
+
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
@@ -42,9 +50,9 @@ const routes = [
   { path: '/theme/colors', name: 'Colors', element: Colors },
   { path: '/theme/typography', name: 'Typography', element: Typography },
   { path: '/base', name: 'Quản lý ví điện tử', exact: true },
-  { path: 'collect_pay', name: 'Thu hộ - chi hộ', exact: true },
+  { path: '/base', name: 'Thu hộ - chi hộ', exact: true },
   { path: '/base/RegisterCustom', name: 'Đăng ký', element: RegisterCustom },
-  { path: '/base/wallet-link', name: 'Liên kết ví', element: WalletLink },
+  { path: '/base/walletLink', name: 'Liên kết ví', element: WalletLink },
   { path: '/base/rechargeMoney', name: 'Nạp tiền', element: RechargeMoney },
   { path: '/base/withdrawMoney', name: 'Rút tiền', element: WithdrawMoney },
   { path: '/base/transferMoney', name: 'Chuyển tiền', element: TransferMoney },
@@ -64,20 +72,25 @@ const routes = [
   { path: 'collect_pay1', name: 'Danh sách giao dịch', element: CollectPay },
 
   { path: '/base/electronicTransfer', name: 'Danh sách chuyển tiền điện tử', element: ElectronicTransfer },
-  { path: '/base/collect_pay', name: 'Danh sách giao dịch', element: CollectPay },
+  { path: '/base/collectPay', name: 'Danh sách giao dịch', element: CollectPay },
 
   { path: '/base/report', name: 'Danh sách giao dịch', element: Report },
   { path: '/base/reportTransfer', name: 'Danh sách giao dịch', element: ReportTransfer},
   { path: '/base/paymentGateway', name: 'Danh sách giao dịch', element: PaymentGateway},
   { path: '/base/reportPayment', name: 'Báo cáo giao dịch', element: ReportPayment},
   { path: '/base/suspiciousTransaction', name: 'Giao dịch nghi ngờ', element: SuspiciousTransaction},
-  { path: '/base/guaranteedAccount', name: 'Tài khoản đảm bảo ví', element: GuaranteedAccount},
+  { path: '/base/guaranteedAccount', name: 'TKĐB ví', element: GuaranteedAccount},
   { path: '/base/reportWallet', name: 'Báo cáo số lượng ví', element: ReportWallet},
   { path: '/base/reportPeriodic', name: 'Báo cáo ví theo kỳ', element: ReportPeriodic},
-  { path: '/base/guaranteedRaeAccount', name: 'Tài khoản đảm bảo ví', element: GuaranteedRaeAccount},
+  { path: '/base/guaranteedRaeAccount', name: 'TKĐB thu - chi hộ', element: GuaranteedRaeAccount},
   { path: '/base/accountWallet', name: 'Tra cứu tài khoản/ví điện tử hạn chế', element: AccountWallet},
 
+  { path: '/base/topWalletByQuantity', name: 'Top ví theo số lượng/giá trị', element: TopWalletByQuantity},
+  { path: '/base/supplySituation', name: 'Tình hình cung ứng', element: SupplySituation},
 
+  { path: '/base/reportPeriodic/reportTwoPay', name: 'báo cáo 2 bên', element: ReportTwoPay},
+  { path: '/base/topWalletByQuantity/topRechargeWithdraw', name: 'top 10 nạp', element: TopRecharge},
+  { path: '/base/topWalletByQuantity/topRechargeWithdraw', name: 'top 10 rút', element: TopWithdraw},
 
 ]
 

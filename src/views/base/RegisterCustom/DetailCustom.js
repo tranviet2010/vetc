@@ -7,10 +7,10 @@ import Tabs from 'react-bootstrap/Tabs';
 
 import React, { Component } from 'react'
 import { Row, Col } from 'react-bootstrap';
-import Edit_custom from './Edit_custom';
-import Info_Car from './Footer_detail/Info_Car';
-import Config_level from './Footer_detail/Config_level';
-import Config_positive from './Footer_detail/Config_positive';
+import Edit_custom from './EditCustom';
+import Info_Car from './footerDetail/InfoCar';
+import Config_level from './footerDetail/ConfigLevel';
+import Config_positive from './footerDetail/ConfigPositive';
 import callApi from 'src/api/config';
 
 import { ToastContainer, toast } from 'react-toastify';

@@ -2,8 +2,9 @@ import React,{Component} from "react";
 import Modal from "react-bootstrap/Modal";
 import {Col, Row} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import {ValidateDateTime} from "../../helper/validate";
 
-export default class AddWallet extends Component {
+export default class UpdateWallet extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,23 +19,23 @@ export default class AddWallet extends Component {
     })
     this.props.onSelectModal()
   }
-  handleInputChange = () => {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-    this.setState({
-      [name]: value
-    })
-  }
+  // handleInputChange = () => {
+  //   const target = event.target;
+  //   const value = target.type === 'checkbox' ? target.checked : target.value;
+  //   const name = target.name;
+  //   this.setState({
+  //     [name]: value
+  //   })
+  // }
   render() {
     const { show } = this.state;
     const { Data } = this.props;
     return (
       <div>
 
-        <Modal show={show} onHide={this.handleClose} size='xl'>
+        <Modal show={show} onHide={this.handleClose} size='lg'>
           <Modal.Header>
-            <Modal.Title><p style={{marginLeft:"330px"}}>Cập nhật tài khoản/ví điện tử hạn chế</p></Modal.Title>
+            <Modal.Title><p>Cập nhật tài khoản/ví điện tử hạn chế</p></Modal.Title>
           </Modal.Header>
           <Modal.Body>
 
@@ -46,20 +47,20 @@ export default class AddWallet extends Component {
                     <tbody className="">
                     <tr className="">
                       <td>Số tài khoản/ví</td>
-                      <td>{Data.numberOfWallet}</td>
+                      <td>{Data.SOTK_VI}</td>
                     </tr>
                     <tr>
                       <td>Tổ chức phát hành</td>
-                      <td>{Data.bank}</td>
+                      <td>{Data.TOCHUCPHATHANH}</td>
                     </tr>
                     <tr className="">
                       <td>Ngày áp dụng</td>
-                      <td><input type="date" name="date_apply" placeholder='Nhập/chọn ngày áp dụng' onChange={this.handleInputChange}></input></td>
+                      <td><input type="date" defaultValue={ValidateDateTime(Data.NGAYAPDUNG)}></input></td>
                     </tr>
                     <tr className="">
                       <td>Hình thức xử lý</td>
                       <td><select name="" id="" form="carform">
-                        <option value="volvo">Chọn hình thức xử lý</option>
+                        <option value="volvo" disabled="disabled">Chọn hình thức xử lý</option>
                         <option>Chặn giao dịch</option>
                         <option>Cảnh báo rủi ro</option>
                       </select></td>

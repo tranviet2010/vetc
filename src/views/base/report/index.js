@@ -8,7 +8,7 @@ import TransactionSituation from "../report/report_detail/TransactionSituation";
 export default class index extends Component {
   render() {
     return (
-      <div style={{marginTop:"20px"}}>
+      <div style={{marginTop:"20px"}} className='backGround_main'>
         <Tabs
           defaultActiveKey="home"
           id="uncontrolled-tab-example"

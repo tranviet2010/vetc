@@ -5,15 +5,156 @@ import Pagination from 'react-bootstrap/Pagination';
 import DetailElectronicTransfer from "./DetailElectronicTransfer";
 
 import '../RegisterCustom/style.css';
+import CIcon from "@coreui/icons-react";
+import {cilDataTransferDown, cilSearch} from "@coreui/icons";
+import "./style.css";
 
 export default class Index extends Component {
   constructor() {
     super();
     this.state = {
       data: [
-        {},
-        {}
-      ],
+        {
+         MAGD: "460",
+         SOTKVI: "21072022030711",
+         CHUTKVI: "Vũ Lan Anh",
+         NHCHUYEN: "Ngân hàng VietinBank (VTB)",
+         SOTKCHUYEN: "107006xxxx4141",
+         NHNHAN: "Ngân hàng VietinBank (VTB)",
+         STKNHAN: "107870081921",
+         CHUTKNHAN: "Nguyen Thi Nga",
+         SOTIEN: "250.000",
+         PHI: "0",
+         NGAYGD: "28/07/2022 14:16",
+         TRANGTHAIGD: "Thành công"
+        },
+        {
+         MAGD: "480",
+         SOTKVI: "21072022010724",
+         CHUTKVI: "Hoàng Minh Tiến",
+         NHCHUYEN: "Ngân hàng VietinBank (VTB)",
+         SOTKCHUYEN: "106870xxxx1959",
+         NHNHAN: "Ngân hàng VietinBank (VTB)",
+         STKNHAN: "106870081922",
+         CHUTKNHAN: "Nguyen Thi My Hanh",
+         SOTIEN: "91.000",
+         PHI: "0",
+         NGAYGD: "28/07/2022 14:15",
+         TRANGTHAIGD: "Thành công"
+        },
+        {
+         MAGD: "488",
+         SOTKVI: "21072022010724",
+         CHUTKVI: "Hoàng Minh Tiến",
+         NHCHUYEN: "Ngân hàng VietinBank (VTB)",
+         SOTKCHUYEN: "106870xxxx1959",
+         NHNHAN: "Ngân hàng VietinBank (VTB)",
+         STKNHAN: "106870081922",
+         CHUTKNHAN: "Nguyen Thi My Hanh",
+         SOTIEN: "91.000",
+         PHI: "0",
+         NGAYGD: "28/07/2022 14:11",
+         TRANGTHAIGD: "Thành công"
+        },
+        {
+         MAGD: "494",
+         SOTKVI: "21072022030738",
+         CHUTKVI: "Nguyễn Thị Mỹ Hạnh",
+         NHCHUYEN: "Ngân hàng VietinBank (VTB)",
+         SOTKCHUYEN: "106870xxxx1922",
+         NHNHAN: "Ngân hàng VietinBank (VTB)",
+         STKNHAN: "107870081921",
+         CHUTKNHAN: "Nguyen Thi Nga",
+         SOTIEN: "91.000",
+         PHI: "0",
+         NGAYGD: "28/07/2022 13:39",
+         TRANGTHAIGD: "Thành công"
+        },
+        {
+         MAGD: "495",
+         SOTKVI: "21072022010724",
+         CHUTKVI: "Hoàng Minh Tiến",
+         NHCHUYEN: "Ngân hàng VietinBank (VTB)",
+         SOTKCHUYEN: "106870xxxx1959",
+         NHNHAN: "Ngân hàng VietinBank (VTB)",
+         STKNHAN: "106870081922",
+         CHUTKNHAN: "Nguyen Thi My Hanh",
+         SOTIEN: "91.000",
+         PHI: "0",
+         NGAYGD: "28/07/2022 12:01",
+         TRANGTHAIGD: "Thành công"
+        },
+        {
+         MAGD: "496",
+         SOTKVI: "21072022030711",
+         CHUTKVI: "Vũ Lan Anh",
+         NHCHUYEN: "Ngân hàng VietinBank (VTB)",
+         SOTKCHUYEN: "107006xxxx4141",
+         NHNHAN: "Ngân hàng VietinBank (VTB)",
+         STKNHAN: "107870081921",
+         CHUTKNHAN: "Nguyen Thi Nga",
+         SOTIEN: "250.000",
+         PHI: "0",
+         NGAYGD: "28/07/2022 11:59",
+         TRANGTHAIGD: "Thành công"
+        },
+        {
+         MAGD: "497",
+         SOTKVI: "21072022010724",
+         CHUTKVI: "Hoàng Minh Tiến",
+         NHCHUYEN: "Ngân hàng VietinBank (VTB)",
+         SOTKCHUYEN: "106870xxxx1959",
+         NHNHAN: "Ngân hàng VietinBank (VTB)",
+         STKNHAN: "106870081922",
+         CHUTKNHAN: "Nguyen Thi My Hanh",
+         SOTIEN: "91.000",
+         PHI: "0",
+         NGAYGD: "28/07/2022 11:51",
+         TRANGTHAIGD: "Đang xử lý"
+        },
+        {
+         MAGD: "498",
+         SOTKVI: "21072022030738",
+         CHUTKVI: "Nguyễn Thị Mỹ Hạnh",
+         NHCHUYEN: "Ngân hàng VietinBank (VTB)",
+         SOTKCHUYEN: "106870xxxx1922",
+         NHNHAN: "Ngân hàng VietinBank (VTB)",
+         STKNHAN: "107870081921",
+         CHUTKNHAN: "Nguyen Thi Nga",
+         SOTIEN: "500.000",
+         PHI: "3000",
+         NGAYGD: "28/07/2022 11:50",
+         TRANGTHAIGD: "Thành công"
+        },
+        {
+         MAGD: "499",
+         SOTKVI: "21072022010724",
+         CHUTKVI: "Hoàng Minh Tiến",
+         NHCHUYEN: "Ngân hàng VietinBank (VTB)",
+         SOTKCHUYEN: "106870xxxx1959",
+         NHNHAN: "Ngân hàng VietinBank (VTB)",
+         STKNHAN: "106870081922",
+         CHUTKNHAN: "Nguyen Thi My Hanh",
+         SOTIEN: "50.000",
+         PHI: "0",
+         NGAYGD: "28/07/2022 11:42",
+         TRANGTHAIGD: "Thành công"
+        },
+        {
+         MAGD: "500",
+         SOTKVI: "21072022030711",
+         CHUTKVI: "Vũ Lan Anh",
+         NHCHUYEN: "Ngân hàng VietinBank (VTB)",
+         SOTKCHUYEN: "107006xxxx4141",
+         NHNHAN: "Ngân hàng VietinBank (VTB)",
+         STKNHAN: "107870081921",
+         CHUTKNHAN: "Nguyen Thi Nga",
+         SOTIEN: "250.000",
+         PHI: "0",
+         NGAYGD: "28/07/2022 11:42",
+         TRANGTHAIGD: "Thành công"
+        }
+       ],
       phone: "",
       checkDetail: false,
       dataCheck: [],
@@ -68,17 +209,19 @@ export default class Index extends Component {
             </Col>
             <Col>
               <select className="form-select" aria-label="Default select example">
-                <option selected>Trạng thái</option>
+                <option selected disabled="disabled">Trạng thái</option>
                 <option value="1">Thành công</option>
                 <option value="2">Thất bại</option>
                 <option value="3">Đang xử lý</option>
               </select>
             </Col>
               <Col>
-                <Button variant="success" style={{ color: "#fff", marginLeft:"30px" }}>Tìm kiếm</Button>
+                <Button variant="success" style={{ color: "#fff", float:"right", marginRight:"-10px"}} >
+                  <CIcon icon={cilSearch} customClassName="nav-icon" style={{width:"20px", height:"20px"}} /> Tìm kiếm</Button>
               </Col>
               <Col>
-                <Button variant="success" className="color_white">Xuất excel</Button>
+                <Button variant="success" className="color_white" style={{float:"right", paddingRight:"5px", marginLeft:"-5px"}}>
+                  <CIcon icon={cilDataTransferDown} customClassName="nav-icon" style={{width:"20px", height:"20px"}} /> Xuất excel</Button>
               </Col>
           </Row>
           <Row>
@@ -99,28 +242,30 @@ export default class Index extends Component {
                   <th scope="col">Tổng tiền</th>
                   <th scope="col">Ngày giao dịch</th>
                   <th scope="col">Trạng thái</th>
-                  <th scope="col">Hành động</th>
+                  <th scope="col">Tác vụ</th>
                 </tr>
               </thead>
               <tbody className="table-group-divider">
                 {
                   data.map((val, index) => (
-                    <tr className="last_tr">
+                    <tr className="last_tr" >
                       <th scope="row">{index + 1}</th>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td href="#" onClick={() => this.handleClick(val)} className="chi_tiet">Chi tiết</td>
+                      <td>{val.MAGD}</td>
+                      <td>{val.SOTKVI}</td>
+                      <td>{val.CHUTKVI}</td>
+                      <td>{val.NHCHUYEN}</td>
+                      <td>{val.SOTKCHUYEN}</td>
+                      <td>{val.NHNHAN}</td>
+                      <td>{val.STKNHAN}</td>
+                      <td>{val.CHUTKNHAN}</td>
+                      <td>{val.SOTIEN}</td>
+                      <td>{val.PHI}</td>
+                      <td>{val.SOTIEN}</td>
+                      <td>{val.NGAYGD}</td>
+                      <td>{val.TRANGTHAIGD}</td>
+                      <td >
+                        <button onClick={() => this.handleClick(val)} className="button_chi_tiet">Xem chi tiết</button>
+                      </td>
                     </tr>
                   ))
                 }
@@ -132,8 +277,8 @@ export default class Index extends Component {
               <span>Xem</span>
               <select className='add_option'>
                 <option selected>10</option>
-                <option value="1">10</option>
-                <option value="2">20</option>
+                <option value="1">20</option>
+                <option value="2">30</option>
                 <option value="3">50</option>
                 <option value="4">100</option>
               </select>

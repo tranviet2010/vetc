@@ -5,13 +5,13 @@ import callApi from 'src/api/config';
 import { BiEdit, BiXCircle } from "react-icons/bi";
 import { FcCheckmark, FcCancel } from "react-icons/fc";
 import { IconName } from "react-icons/bi";
+import { updateErro, updateSucc } from 'src/views/helper/codeError';
 
 export default class Config_positive extends Component {
   constructor(props) {
     super(props)
     this.state = {
       data: [],
-      verify: "",
       from_monney: "",
       to_monney: "",
       checkAdd: false,
@@ -96,17 +96,17 @@ export default class Config_positive extends Component {
       verifyMethod: this.state.verify.length == 0 ? idCheck.verifyMethod : this.state.verify,
     }
     callApi(`verify-rule-config`, 'PUT', dataUpdate).then((res) => {
-      toast("Cập nhật thành công !")
+      toast(updateSucc)
     }).catch((err) => {
-      toast.error("Cập nhật thất bại !")
+      toast.error(updateErro)
     })
   }
   isDeleteData = (e) => {
     const { idCheck } = this.state
     callApi(`verify-rule-confige?verify_rule_config_id=${e}`, 'DELETE').then((res) => {
-      toast("Cập nhật thành công !")
+      toast(updateSucc)
     }).catch((err) => {
-      toast.error("Cập nhật thất bại !")
+      toast.error(updateErro)
     })
   }
   componentDidMount() {

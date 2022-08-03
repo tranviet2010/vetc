@@ -18,3 +18,18 @@ input{
   background-color: #0c9f4f;
   border-color: #0c9f4f;
 }
+.number{
+  text-align: right;
+}
+.text{
+  text-align: left;
+}
+.button_chi_tiet{
+  background: none;
+  border-radius: 7px;
+  border-color: #0c9f4f;
+}
+.button_chi_tiet:hover{
+  background-color: #0c9f4f;
+  color: #ffffff;
+}

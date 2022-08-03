@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Button, Form, Row, Col } from 'react-bootstrap';
 import '../stylePayment.css';
+import CIcon from "@coreui/icons-react";
+import {cilDataTransferDown, cilSearch} from "@coreui/icons";
 
 
 
@@ -9,9 +11,9 @@ export default class transactionSituation extends Component {
     super(props)
     this.state={
       data: [
-        {date:"Tháng 1"},
-        {date:"Tháng 2"},
-        {date:"Tháng 3"},
+        {thang:"Tháng 1",soluong:200,giatri:"15.000.000",notsoluong:10,notgiatri:"1.000.000"},
+        {thang:"Tháng 2",soluong:100,giatri:"10.000.000",notsoluong:2,notgiatri:"600.000"},
+        {thang:"Tháng 3",soluong:100,giatri:"10.000.000",notsoluong:1,notgiatri:"600.000"},
       ],
     };
   }
@@ -24,10 +26,11 @@ export default class transactionSituation extends Component {
       <div>
         <Col>
           <b>Tình hình giao dịch</b>
+          <p></p>
         </Col>
         <Row>
-          <Col>Quý:</Col>
-          <Col>
+          <Col xs = "1">Quý:</Col>
+          <Col xs = "2" style={{marginLeft:"-40px"}}>
             <select className="form-select" aria-label="Default select example">
               <option selected>Quý 1</option>
               <option value="1">Quý 2</option>
@@ -36,27 +39,32 @@ export default class transactionSituation extends Component {
 
             </select>
           </Col>
-          <Col>Năm:</Col>
-          <Col>
+          <Col xs = "1">Năm:</Col>
+          <Col xs = "2" style={{marginLeft:"-40px"}}>
             <select className="form-select" aria-label="Default select example">
               <option selected>2021</option>
               <option value="1">2022</option>
             </select>
           </Col>
           <Col>
-            <Button variant="success" style={{ color: "#fff" }} className="button_flex">Tìm kiếm</Button>
+            <Button variant="success" style={{ color: "#fff", float:"right", marginRight:"-210px"}} >
+              <CIcon icon={cilSearch} customClassName="nav-icon" style={{width:"20px", height:"20px"}} /> Tìm kiếm</Button>
           </Col>
           <Col>
-            <Button variant="success" className="color_white button_flex">Xuất excel</Button>
+            <Button variant="success" className="color_white" style={{float:"right"}}>
+              <CIcon icon={cilDataTransferDown} customClassName="nav-icon" style={{width:"20px", height:"20px"}} /> Xuất excel</Button>
           </Col>
         </Row>
+
+
+        
         <Row>
           <p></p>
           <table className="table table-bordered">
             <thead className="last_right">
             <tr>
-              <th scope="col">STT</th>
-              <th scope="col">Tháng</th>
+              <th scope="col" >STT</th>
+              <th scope="col" >Tháng</th>
               <th scope="col" colSpan="2">Giao dịch xử lý thành công</th>
               <th scope="col" colSpan="2">Giao dịch xử lý không thành công</th>
             </tr>
@@ -76,17 +84,23 @@ export default class transactionSituation extends Component {
               data.map((val,index) => (
                 <tr className="last_tr">
                   <th scope="row">{index + 1}</th>
-                  <td>{val.date}</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td>{val.thang}</td>
+                  <td>{val.soluong}</td>
+                  <td align={"right"}>{val.giatri}</td>
+                  <td>{val.notsoluong}</td>
+                  <td align={"right"}>{val.notgiatri}</td>
                 </tr>
               ))
             }
             </tbody>
           </table>
         </Row>
+
+
+
+
+
+
         <Row>
           <table>
             <tr>
@@ -94,7 +108,7 @@ export default class transactionSituation extends Component {
                 <tr>
                   <th>TOP ĐƠN VỊ CHẤP NHẬN THANH TOÁN CÓ SỐ LƯỢNG GD NHIỀU NHẤT</th>
                 </tr>
-                <tr>
+     
                   <table className="table table-bordered">
                     <thead className="last_right">
                     <tr>
@@ -119,26 +133,35 @@ export default class transactionSituation extends Component {
                     }
                     </tbody>
                   </table>
-                  <Row>
-                    <Col className='d-flex'>
-                      <span>Số lượng bản ghi</span>
-                      <select className='add_option'>
-                        <option selected>10</option>
-                        <option value="1">10</option>
-                        <option value="2">20</option>
-                        <option value="3">50</option>
-                        <option value="4">100</option>
-                      </select>
-                      <span> trên tổng số {data.length} bản ghi</span>
-                    </Col>
-                  </Row>
-                </tr>
+                  <Col className='d-flex'>
+                  <span>Số lượng bản ghi </span>
+                  <select className='add_option'>
+                    <option selected> {data.length}</option>
+                  </select>
+                </Col>
+             
               </td>
-              <td>
+              
+            </tr>
+          </table>
+        </Row>
+
+
+
+
+
+
+
+
+        
+        <Row>
+              <table>
+          
+                <td>
                 <tr>
                   <th>TOP ĐƠN VỊ CHẤP NHẬN THANH TOÁN CÓ GIÁ TRỊ GD NHIỀU NHẤT</th>
                 </tr>
-                <tr>
+          
                   <table className="table table-bordered">
                     <thead className="last_right">
                     <tr>
@@ -163,23 +186,16 @@ export default class transactionSituation extends Component {
                     }
                     </tbody>
                   </table>
-                  <Row>
-                    <Col className='d-flex'>
-                      <span>Số lượng bản ghi</span>
-                      <select className='add_option'>
-                        <option selected>10</option>
-                        <option value="1">10</option>
-                        <option value="2">20</option>
-                        <option value="3">50</option>
-                        <option value="4">100</option>
-                      </select>
-                      <span> trên tổng số {data.length} bản ghi</span>
-                    </Col>
-                  </Row>
-                </tr>
+                  <Col className='d-flex'>
+                    <span>Số lượng bản ghi </span>
+                    <select className='add_option'>
+                      <option selected> {data.length}</option>
+                    </select>
+                  </Col>
+              
               </td>
-            </tr>
-          </table>
+         
+              </table>
         </Row>
       </div>
     )

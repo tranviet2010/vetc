@@ -2,6 +2,7 @@ import React,{Component} from "react";
 import Modal from "react-bootstrap/Modal";
 import {Col, Row} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import {cilAlignCenter} from "@coreui/icons";
 
 export default class AddWallet extends Component {
   constructor(props) {
@@ -33,9 +34,11 @@ export default class AddWallet extends Component {
     return (
       <div>
 
-        <Modal show={show} onHide={this.handleClose} size='xl'>
+        <Modal show={show} onHide={this.handleClose} size='lg'>
+          <Modal.Header closeButton>
+          </Modal.Header>
           <Modal.Header>
-            <Modal.Title><p style={{marginLeft:"330px"}}>Thêm mới tài khoản/ví điện tử hạn chế</p></Modal.Title>
+            <Modal.Title><p>Thêm mới tài khoản/ví điện tử hạn chế</p></Modal.Title>
           </Modal.Header>
           <Modal.Body>
 
@@ -46,11 +49,11 @@ export default class AddWallet extends Component {
 
                     <tbody className="">
                     <tr className="">
-                        <td><input type="radio" name="wallet" style={{marginLeft:"-120px",marginRight:"-110px"}}/>Số tài khoản/ví</td>
+                        <td><input type="radio" name="wallet" style={{marginLeft:"-80px",marginRight:"-70px"}}/>Số tài khoản/ví</td>
                         <td><input type="text" name="numberOfWallet" placeholder='Nhập số tài khoản/ví điện tử' onChange={this.handleInputChange}></input></td>
                     </tr>
                     <tr>
-                        <td><input type="radio" name="wallet" style={{marginLeft:"-120px",marginRight:"-110px"}}/>Danh sách tài khoản/ví</td>
+                        <td><input type="radio" name="wallet" style={{marginLeft:"-80px",marginRight:"-70px"}}/>Danh sách tài khoản/ví</td>
                         <td><input type="file" name="numberOfWallet"></input></td>
                     </tr>
                     <tr className="">

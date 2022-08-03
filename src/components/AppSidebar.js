@@ -31,7 +31,7 @@ const AppSidebar = () => {
       }}
     >
       <CSidebarBrand className="d-none d-md-flex" to="/">
-        <CImage src="https://vetc.com.vn/images/logo_trang.svg" height={50}/>
+        <CImage src={require('../assets/images/VETC_Logo-01.png')} height={50}/>
         <CIcon className="sidebar-brand-narrow" icon={sygnet} height={35} />
       </CSidebarBrand>
       <CSidebarNav>

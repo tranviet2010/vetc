@@ -10,18 +10,39 @@ input{
   border-color: #d8dbe0;
   height: 25px;
 }
-.status_transaction{
-  padding: 5px;
-  width: 10%;
-  text-align: center;
-  border-radius: 7px;
-  color: #fff;
-  background-color: #0c9f4f;
-}
+/*.status_transaction{*/
+/*  padding: 4px;*/
+/*  width: 10%;*/
+/*  text-align: center;*/
+/*  border-radius: 5px;*/
+/*  font-size: 14px;*/
+/*  color: #fff;*/
+/*  background-color: #0c9f4f;*/
+/*}*/
+/*.status_transaction:hover{*/
+/*  background-color: #0c9f4f;*/
+/*  color: #ffffff;*/
+/*}*/
+
 .page-link{
   color:#0c9f4f;
 }
 .active > .page-link{
   background-color: #0c9f4f;
   border-color: #0c9f4f;
+}
+.number{
+  text-align: right;
+}
+.text{
+  text-align: left;
+}
+.button_chi_tiet{
+  background: none;
+  border-radius: 7px;
+  border-color: #0c9f4f;
+}
+.button_chi_tiet:hover{
+  background-color: #0c9f4f;
+  color: #ffffff;
 }

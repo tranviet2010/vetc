@@ -10,7 +10,7 @@ import callApi from 'src/api/config';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { CheckMail, CheckText, PhoneNumber } from 'src/views/helper/validate';
-import { CFormInput, CForm, CButton } from '@coreui/react';
+import { errorBirthday, errorEmail, errorFullname, errorNoiCap, errorPhoneNUmber, errorThuongTru } from 'src/views/helper/codeError';
 
 var axios = require('axios');
 
@@ -40,7 +40,6 @@ export default class Add_custom extends Component {
             idNoBack: "",
             phoneCheck: false,
             checkText: false,
-            validated :false
         }
     }
     handleClose = () => {
@@ -58,14 +57,29 @@ export default class Add_custom extends Component {
         })
     }
     sendForm = () => {
-        const form = event.currentTarget
-        if (form.checkValidity() === false) {
-            event.preventDefault()
-            event.stopPropagation()
+        const { phone, email, fullname, noi_cap, thuong_tru, birthday, date_create } = this.state;
+        if (fullname.length == 0 || CheckText(fullname)) {
+            toast.error(errorFullname)
+            return
         }
-        this.setState({
-            validated :true
-        })
+        else if (!PhoneNumber(phone)) {
+            toast.error(errorPhoneNUmber)
+            return
+        } else if (!CheckMail(email)) {
+            toast.error(errorEmail)
+            return
+        } else if (birthday.length == 0) {
+            toast.error(errorBirthday)
+            return
+        }
+        else if (noi_cap.length == 0) {
+            toast.error(errorNoiCap)
+            return
+        }
+        else if (thuong_tru.length == 0) {
+            toast.error(errorThuongTru)
+            return
+        }
         let data = {
             address: this.state.thuong_tru,
             avatar: this.state.avatar,
@@ -90,10 +104,10 @@ export default class Add_custom extends Component {
                 toast.error("Lỗi hệ thống !")
             }
         })
-        // .catch((res) => {
-        //     console.log("ress==",res)
-        //     toast.error("Lỗi hệ thống !")
-        // })
+            .catch((res) => {
+                console.log("ress==", res)
+                toast.error("Lỗi hệ thống !")
+            })
     }
     handleInputDate = (e) => {
 
@@ -128,18 +142,13 @@ export default class Add_custom extends Component {
         })
     };
     render() {
-        const { show, phoneCheck,validated  } = this.state;
+        const { show, phoneCheck } = this.state;
         const { Data } = this.props;
         console.log("test", PhoneNumber(this.state.phone))
         return (
-            <CForm
-                noValidate
-                validated={validated}
-                onSubmit={this.sendForm}
-            >
             <div>
                 <ToastContainer />
-                <Modal show={show} onHide={this.handleClose} size='xl'>
+                <Modal show={show} onHide={this.handleClose} size='xl' className='modal_add'>
                     <Modal.Header>
                         <Modal.Title>Đăng ký ví</Modal.Title>
                     </Modal.Header>
@@ -154,20 +163,12 @@ export default class Add_custom extends Component {
                                             <tr className="">
                                                 <td>Họ tên:</td>
                                                 <td>
-                                                    <input type="text" name="fullname" placeholder='Nhập họ và tên...' onChange={this.handleInputChange}></input>
-                                                    <CFormInput
-                                                        type="text"
-                                                        id="validationServer01"
-                                                        label="Email"
-                                                        feedback="Looks good!"
-                                                        defaultValue="name@surname.com"
-                                                        valid
-                                                        required
-                                                        />
+                                                    <input type="text" name="fullname" onChange={this.handleInputChange}></input>
                                                 </td>
                                                 <td>Loại ví:</td>
                                                 <td>
                                                     <select name="type_wall" id="cars" form="carform" onChange={this.handleInputChange}>
+                                                        <option value="">Loại ví</option>
                                                         <option value="1">Cá nhân</option>
                                                         <option value="2">Tổ chức</option>
                                                     </select>
@@ -176,16 +177,16 @@ export default class Add_custom extends Component {
                                             <tr className="">
                                                 <td>Điện thoại:</td>
                                                 <td>
-                                                    <input type="phone" name="phone" placeholder='Nhập số điện thoại...' onChange={this.handleInputChange}></input>
+                                                    <input type="phone" name="phone"  onChange={this.handleInputChange}></input>
                                                 </td>
                                                 <td>Giấy tờ tùy thân:</td>
-                                                <td><input type="text" name="giayto" placeholder='Nhập giấy tờ tùy thân...' onChange={this.handleInputChange}></input></td>
+                                                <td><input type="text" name="giayto" onChange={this.handleInputChange}></input></td>
                                             </tr>
                                             <tr className="">
                                                 <td>Email:</td>
-                                                <td><input type="text" name="email" placeholder='Nhập email...' onChange={this.handleInputChange}></input></td>
+                                                <td><input type="text" name="email" onChange={this.handleInputChange}></input></td>
                                                 <td>Ngày cấp:</td>
-                                                <td><input type="date" name="date_create" placeholder='Nhập ngày cấp...' onChange={this.handleInputChange}></input></td>
+                                                <td><input type="date" name="date_create" onChange={this.handleInputChange}></input></td>
                                             </tr>
                                             <tr className="">
                                                 <td>Giới tính:</td>
@@ -194,25 +195,25 @@ export default class Add_custom extends Component {
                                                     <option value="2">Nữ</option>
                                                 </select></td>
                                                 <td>Nơi cấp:</td>
-                                                <td><input type="text" name="noi_cap" placeholder='Nhập nơi cấp...' onChange={this.handleInputChange}></input></td>
+                                                <td><input type="text" name="noi_cap" onChange={this.handleInputChange}></input></td>
                                             </tr>
                                             <tr className="">
                                                 <td>Ngày sinh:</td>
-                                                <td><input type="date" name="birthday" placeholder='Nhập họ và tên...' onChange={this.handleInputChange}></input></td>
+                                                <td><input type="date" name="birthday" onChange={this.handleInputChange}></input></td>
                                                 <td>Địa chỉ thường trú:</td>
-                                                <td><input type="text" name="thuong_tru" placeholder='Nhập địa chỉ thường chú...' onChange={this.handleInputChange}></input></td>
+                                                <td><input type="text" name="thuong_tru" onChange={this.handleInputChange}></input></td>
                                             </tr>
                                             <tr className="">
-                                                <td>CMND mặt trước:</td>
+                                                <td>Giấy tờ mặt trước:</td>
                                                 <td><input type="file" onChange={event => this.handleFile(event, 2)}></input></td>
                                                 <td>Quê quán:</td>
-                                                <td><input type="text" name="district" placeholder='Nhập quê quán...' onChange={this.handleInputChange}></input></td>
+                                                <td><input type="text" name="district" onChange={this.handleInputChange}></input></td>
                                             </tr>
                                             <tr className="">
-                                                <td>CMND mặt sau:</td>
-                                                <td><input type="file" name="cmnd_mt" onChange={event => this.handleFile(event, 3)}></input></td>
+                                                <td>Giấy tờ mặt sau:</td>
+                                                <td><input type="file" title="Choose a video please" name="cmnd_mt" onChange={event => this.handleFile(event, 3)}></input></td>
                                                 <td>Quốc tịch:</td>
-                                                <td><input type="text" name="typeWall" value="Việt Nam" disabled placeholder='Nhập email...' onChange={this.handleInputChange}></input></td>
+                                                <td><input type="text" name="typeWall" value="Việt Nam" disabled onChange={this.handleInputChange}></input></td>
                                             </tr>
                                             <tr className="">
                                                 <td></td>
@@ -233,16 +234,12 @@ export default class Add_custom extends Component {
                         <Button variant="secondary color_white" onClick={this.handleClose}>
                             Đóng
                         </Button>
-                        {/* <Button variant="success color_white" onClick={this.sendForm}>
+                        <Button variant="success color_white" onClick={this.sendForm}>
                             Đăng ký
-                        </Button> */}
-                        <CButton color="primary" type="submit">
-                        Đăng ký
-                        </CButton>
+                        </Button>
                     </Modal.Footer>
                 </Modal>
             </div>
-            </CForm >
         )
     }
 }

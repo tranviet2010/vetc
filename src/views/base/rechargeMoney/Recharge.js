@@ -5,6 +5,8 @@ import Pagination from "react-bootstrap/Pagination";
 import DetailRecharge from "./DetailRecharge";
 
 import './styleRecharge.css';
+import CIcon from "@coreui/icons-react";
+import {cilDataTransferDown, cilSearch} from "@coreui/icons";
 
 export default class recharge extends Component {
   constructor() {
@@ -50,12 +52,12 @@ export default class recharge extends Component {
           </Row>
         </div>
         <Row>
-          <Col>
+          <Col xs = "2">
             <div className="input-group mb-3">
               <input type="date" className="form-control" placeholder="Từ ngày" aria-label="Username" aria-describedby="basic-addon1" />
             </div>
           </Col>
-          <Col>
+          <Col xs = "2">
             <div className="input-group mb-3">
               <input type="date" className="form-control" placeholder="Đến ngày" aria-label="Username" aria-describedby="basic-addon1" />
             </div>
@@ -70,18 +72,10 @@ export default class recharge extends Component {
               <input type="text" className="form-control" placeholder="Số tài khoản ví" aria-label="Username" aria-describedby="basic-addon1" />
             </div>
           </Col>
+
           <Col>
             <select className="form-select" aria-label="Default select example">
-              <option selected>Trạng thái</option>
-              <option value="1">Thành công</option>
-              <option value="2">Thất bại</option>
-              <option value="3">Đang xử lý</option>
-              <option value="4">Timeout</option>
-            </select>
-          </Col>
-          <Col>
-            <select className="form-select" aria-label="Default select example">
-              <option selected>Ngân hàng liên kết</option>
+              <option selected disabled="disabled">Ngân hàng</option>
               <option value="1">Vietcombank</option>
               <option value="2">BIDV</option>
               <option value="3">Techcombank</option>
@@ -90,13 +84,26 @@ export default class recharge extends Component {
           </Col>
 
           <Col>
-            <Button variant="success" style={{ color: "#fff" }} className="button_flex">Tìm kiếm</Button>
+            <Button variant="success" style={{ color: "#fff", float:"left", paddingLeft:"20px", marginLeft:"10px"}} >
+              <CIcon icon={cilSearch} customClassName="nav-icon" style={{width:"20px", height:"20px"}} /> Tìm kiếm</Button>
           </Col>
           <Col>
-            <Button variant="success" className="color_white button_flex">Xuất excel</Button>
+            <Button variant="success" className="color_white" style={{float: "left", paddingLeft:"25px"}}>
+              <CIcon icon={cilDataTransferDown} customClassName="nav-icon" style={{width:"20px", height:"20px"}} /> Xuất excel</Button>
           </Col>
-
         </Row>
+        <Row>
+          <Col xs = "2">
+            <select className="form-select" aria-label="Default select example">
+              <option selected disabled="disabled">Trạng thái</option>
+              <option value="1">Thành công</option>
+              <option value="2">Thất bại</option>
+              <option value="3">Đang xử lý</option>
+              <option value="4">Timeout</option>
+            </select>
+          </Col>
+        </Row>
+        <br/>
         <Row>
           <table className="table table-bordered">
             <thead className="last_right">
@@ -109,7 +116,7 @@ export default class recharge extends Component {
               <th scope="col">Số TK/Thẻ</th>
               <th scope="col">Trạng thái</th>
               <th scope="col">Ngày giao dịch</th>
-              <th scope="col">Hành động</th>
+              <th scope="col">Tác vụ</th>
             </tr>
             </thead>
             <tbody className="table-group-divider">
@@ -119,12 +126,13 @@ export default class recharge extends Component {
                   <th scope="row">{index + 1}</th>
                   <td>{val.maGd}</td>
                   <td>{val.numberAccountOfWallet}</td>
-                  <td>{val.money}</td>
-                  <td>{val.bank}</td>
+                  <td className="number">{val.money}</td>
+                  <td className="text">{val.bank}</td>
                   <td>{val.numberAccountOfBank}</td>
-                  <td>{val.status}</td>
+                  <td className="text">{val.status}</td>
                   <td>{val.time}</td>
-                  <td href="#" onClick={()=>this.handleClickDetailRecharge(val)}>Chi tiết nạp tiền</td>
+                  <td >
+                    <button onClick={()=>this.handleClickDetailRecharge(val)} className="button_chi_tiet">Xem chi tiết</button></td>
                 </tr>
               ))
             }
@@ -136,8 +144,8 @@ export default class recharge extends Component {
             <span>Xem</span>
             <select className='add_option'>
               <option selected>10</option>
-              <option value="1">10</option>
-              <option value="2">20</option>
+              <option value="1">20</option>
+              <option value="2">30</option>
               <option value="3">50</option>
               <option value="4">100</option>
             </select>

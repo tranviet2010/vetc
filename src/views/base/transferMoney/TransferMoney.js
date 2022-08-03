@@ -4,6 +4,8 @@ import {Button, Col, Row} from "react-bootstrap";
 import Pagination from "react-bootstrap/Pagination";
 import DetailTransferMoney from "./DetailTransferMoney";
 import "./styleTransfer.css";
+import CIcon from "@coreui/icons-react";
+import {cilDataTransferDown, cilSearch} from "@coreui/icons";
 
 
 
@@ -52,12 +54,12 @@ export default class transferMoney extends Component {
           </Row>
         </div>
         <Row>
-          <Col>
+          <Col xs = "2">
             <div className="input-group mb-3">
               <input type="date" className="form-control" placeholder="Từ ngày" aria-label="Username" aria-describedby="basic-addon1" />
             </div>
           </Col>
-          <Col>
+          <Col xs = "2">
             <div className="input-group mb-3">
               <input type="date" className="form-control" placeholder="Đến ngày" aria-label="Username" aria-describedby="basic-addon1" />
             </div>
@@ -78,24 +80,26 @@ export default class transferMoney extends Component {
             </div>
           </Col>
           <Col>
+            <Button variant="success" style={{ color: "#fff", float:"left", paddingRight:"20px", marginLeft:"10px"}} >
+              <CIcon icon={cilSearch} customClassName="nav-icon" style={{width:"20px", height:"20px"}} /> Tìm kiếm</Button>
+          </Col>
+          <Col>
+            <Button variant="success" className="color_white" style={{float:"left", paddingRight:"20px"}}>
+              <CIcon icon={cilDataTransferDown} customClassName="nav-icon" style={{width:"20px", height:"20px"}} /> Xuất excel</Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs = "2">
             <select className="form-select" aria-label="Default select example">
-              <option selected>Trạng thái</option>
+              <option selected disabled="disabled">Trạng thái</option>
               <option value="1">Thành công</option>
               <option value="2">Thất bại</option>
               <option value="3">Đang xử lý</option>
               <option value="4">Timeout</option>
             </select>
           </Col>
-
-
-          <Col>
-            <Button variant="success" style={{ color: "#fff" }} className="button_flex">Tìm kiếm</Button>
-          </Col>
-          <Col>
-            <Button variant="success" className="color_white button_flex">Xuất excel</Button>
-          </Col>
-
         </Row>
+        <br/>
         <Row>
           <table className="table table-bordered">
             <thead className="last_right">
@@ -103,29 +107,31 @@ export default class transferMoney extends Component {
               <th scope="col">STT</th>
               <th scope="col">Mã GD</th>
               <th scope="col">Số TK ví chuyển</th>
-              <th scope="col">Số Tk ví nhận</th>
+              <th scope="col">Số TK ví nhận</th>
               <th scope="col">Ngày GD</th>
               <th scope="col">Số tiền</th>
               <th scope="col">Phí</th>
               <th scope="col">Tổng tiền</th>
               <th scope="col">Trạng thái</th>
-              <th scope="col">Hành động</th>
+              <th scope="col">Tác vụ</th>
             </tr>
             </thead>
             <tbody className="table-group-divider">
             {
               data.map((val, index) => (
-                <tr className="last_tr">
+                <tr className="last_tr" >
                   <th scope="row">{index + 1}</th>
                   <td>{val.maGd}</td>
                   <td>{val.numberAccountOfTransferWallet}</td>
                   <td>{val.numberAccountOfRecceivingWallet}</td>
                   <td>{val.date}</td>
-                  <td>{val.money}</td>
-                  <td>{val.fee}</td>
-                  <td>{val.totalMoney}</td>
+                  <td className="number">{val.money}</td>
+                  <td className="number">{val.fee}</td>
+                  <td className="number">{val.totalMoney}</td>
                   <td>{val.status}</td>
-                  <td href="#" onClick={()=>this.handleClickDetailTransfer(val)}>Chi tiết chuyển tiền</td>
+                  <td >
+                    <button onClick={()=>this.handleClickDetailTransfer(val)} className="button_chi_tiet">Xem chi tiết</button>
+                  </td>
                 </tr>
               ))
             }
@@ -137,8 +143,8 @@ export default class transferMoney extends Component {
             <span>Xem</span>
             <select className='add_option'>
               <option selected>10</option>
-              <option value="1">10</option>
-              <option value="2">20</option>
+              <option value="1">20</option>
+              <option value="2">30</option>
               <option value="3">50</option>
               <option value="4">100</option>
             </select>

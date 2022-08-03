@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import { Button, Form, Row, Col } from 'react-bootstrap';
-import Add_custom from './Add_custom';
-import Detail_custom from './Detail_custom';
-import Pagination from 'react-bootstrap/Pagination';
+import Add_custom from './AddCustom';
+import Detail_custom from './DetailCustom';
 import './style.css';
 import callApi from 'src/api/config';
 import { BiInfoCircle } from "react-icons/bi";
-import { ValidateDate } from 'src/views/helper/validate';
+import { PhoneNumber, ValidateDate } from 'src/views/helper/validate';
+import Pagination from "react-js-pagination";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 export default class Index extends Component {
@@ -23,7 +26,10 @@ export default class Index extends Component {
       dataCheck: [],
       totalCount:"",
       toDate:"",
-      fromDate:""
+      fromDate:"",
+      type_wallet:"",
+      activePage: 1,
+      page:10
 
     };
   }
@@ -36,6 +42,15 @@ export default class Index extends Component {
   addCustom = () => {
     this.setState({
       addCus: true
+    })
+  }
+  handlePageChange(pageNumber) {
+    const {page}=this.state;
+    callApi(`customer-views?limit=${page}&page=${pageNumber}`).then((res) => {
+      this.setState({
+        data: res.data.data,
+        activePage:pageNumber
+      })
     })
   }
   onSelectModal = () => {
@@ -55,20 +70,27 @@ export default class Index extends Component {
   }
   panigationHandle=(e)=>{
     let indexPani=e.target.value
+
    callApi(`customer-views?limit=${indexPani}`).then((res) => {
       this.setState({
         data: res.data.data,
-        totalCount:res.data.totalCount
+        totalCount: res.data.totalCount,
+        page: indexPani
       })
     })
-    
+
   }
   searchParam = () => {
-    const { phone, giay_to,state,toDate, fromDate } = this.state;
-    console.log("fromdate",ValidateDate(fromDate))
-    callApi(`customer-views?mobiNumber=${phone}&idNo=${giay_to}&state=${state}&createdDate=gt:${ValidateDate(toDate)}&createdDate=lt<${ValidateDate(fromDate)}`).then((res) => {
+    const { phone,page, giay_to,state,toDate, fromDate,type_wallet } = this.state;
+    // if(phone.length!=0&&!PhoneNumber(phone)){
+    //     toast("Số điện thoại không đúng định dạng !")
+    //     return
+    // }
+    // &createdDate=gt:${ValidateDate(toDate)}&createdDate=lt<${ValidateDate(fromDate)
+    callApi(`customer-views?mobiNumber=${phone}&idNo=${giay_to}&state=${state}&walletType=${type_wallet}&limit=${page}`).then((res) => {
       this.setState({
-        data: res.data.data
+        data: res.data.data,
+        totalCount:res.data.totalCount
       })
     })
   }
@@ -82,7 +104,7 @@ export default class Index extends Component {
   }
 
   render() {
-    const { data, dataCheck,totalCount } = this.state;
+    const { data, dataCheck,totalCount,page } = this.state;
     return (
       <div className='backGround_main'>
         <div className="main_rege">
@@ -119,14 +141,27 @@ export default class Index extends Component {
           </Col>
           <Col>
             <select className="form-select" aria-label="Default select example" defaultValue="" name="state" onChange={this.handleInputChange}>
-              <option value="">Trạng thái</option>
-              <option value="OPEN">Hoạt động</option>
+              <option value="">Tất cả</option>
+              <option value="OPEN">Đã xác thực</option>
+              <option value="NOT_VERIFIED">Chưa xác thực</option>
               <option value="BLOCK_TRANSFER">Khóa chuyển tiền</option>
               <option value="BLOCK">Khóa</option>
+              <option value="">Đóng</option>
             </select>
           </Col>
           <Col>
-            <Button variant="success" style={{ color: "#fff" }} onClick={this.searchParam}>Tìm kiếm</Button>
+            <Button variant="success" style={{ color: "#fff" }} onClick={this.searchParam}>
+              Tìm kiếm</Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={2} className="mb-3">
+          <select className="form-select" aria-label="Default select example" name="type_wallet" onChange={this.handleInputChange}>
+              <option value="Individual">Ví cá nhân</option>
+              <option value="Corporate">Ví tổ chức</option>
+              <option value="">Ví ĐVCNTT</option>
+
+            </select>
           </Col>
         </Row>
         <Row>
@@ -145,11 +180,12 @@ export default class Index extends Component {
                 <th scope="col">Hành động</th>
               </tr>
             </thead>
-            <tbody className="table-group-divider text-center">
+            {
+              data.length==0?<div className="last_tr"><p>Không có dữ liệu hiển thị</p></div>:
+              <tbody className="table-group-divider text-center">
               {
-                // data.length==0?<tr className="last_tr"><p>Trống</p></tr>:
                 data.map((val, index) => (
-                  <tr className="last_tr" key={index}>
+                  <tr className="last_tr text-center" key={index}>
                     <th scope="row">{index + 1}</th>
                     <td>{val.custId}</td>
                     <td>{val.custName}</td>
@@ -164,6 +200,8 @@ export default class Index extends Component {
                 ))
               }
             </tbody>
+            }
+            
           </table>
         </Row>
         <Row>
@@ -179,22 +217,19 @@ export default class Index extends Component {
             <span> trên tổng số {totalCount} bản ghi</span>
           </Col>
           <Col className='d-flex justify-content-end'>
-            <Pagination>
-              <Pagination.First />
-              <Pagination.Prev />
-
-              <Pagination.Item active>{1}</Pagination.Item>
-              <Pagination.Item>{2}</Pagination.Item>
-              <Pagination.Item>{3}</Pagination.Item>
-
-              <Pagination.Next />
-              <Pagination.Last />
-            </Pagination>
+          <Pagination
+              activePage={this.state.activePage}
+              itemsCountPerPage={page}
+              totalItemsCount={Number(totalCount)}
+              pageRangeDisplayed={5}
+              onChange={this.handlePageChange.bind(this)}
+              itemClass="page-item"
+              linkClass="page-link"
+            />
           </Col>
         </Row>
         {this.state.checkDetail == true ? <Detail_custom Data={dataCheck} onSelectModal={this.onSelectModal} /> : ''}
         {this.state.addCus == true ? <Add_custom onSelectModal={this.onSelectModal} /> : ""}
-
       </div>
     )
   }

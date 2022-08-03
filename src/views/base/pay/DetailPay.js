@@ -23,55 +23,61 @@ export default class detailPay extends Component {
     const { Data } = this.props;
     return (
       <div>
-        <Modal show={show} onHide={this.handleClose} size='xl'>
+        <Modal show={show} onHide={this.handleClose} size='lg'>
+          <Modal.Header closeButton>
+          </Modal.Header>
           <Modal.Body>
             <Row>
-
               <table>
                 <thead>
-                <th>Thông tin khách hàng</th>
+                <h5>Thông tin khách hàng</h5>
                 <tr>
-                  <td scope="col">Họ tên:</td>
+                  <td scope="col" style={{width:"25%"}}>Họ tên</td>
+                  <td scope="col" style={{width: "20%"}}></td>
+                </tr>
+                <tr>
+                  <td scope="col">Số TK ví</td>
                   <td scope="col"></td>
                 </tr>
+                <br/>
+                </thead>
+              </table>
+              <hr/>
+                <table>
+                  <thead>
+                <h5>Thông tin giao dịch</h5>
                 <tr>
-                  <td scope="col">Số TK ví:</td>
-                  <td scope="col"></td>
+                  <td scope="col" style={{width:"28%"}}>Mã GD</td>
+                  <td scope="col" style={{width: "28%"}}>{Data.maGd}</td>
+                  <td scope="col" style={{width:"20%"}}>Số tiền</td>
+                  <td scope="col" >{Data.money}</td>
                 </tr>
-
-                <th>Thông tin giao dịch</th>
                 <tr>
-                  <td scope="col">Mã GD:</td>
-                  <td scope="col">{Data.maGd}</td>
-                  <td scope="col">Số tiền:</td>
-                  <td scope="col">{Data.money}</td>
-                </tr>
-                <tr>
-                  <td scope="col">Mã đơn hàng:</td>
+                  <td scope="col">Mã đơn hàng</td>
                   <td scope="col">{Data.maHd}</td>
-                  <td scope="col">Phí:</td>
+                  <td scope="col">Phí</td>
                   <td scope="col">{Data.fee}</td>
                 </tr>
                 <tr>
-                  <td scope="col">Thời gian GD:</td>
+                  <td scope="col">Thời gian GD</td>
                   <td scope="col">{Data.date}</td>
-                  <td scope="col">Tổng tiền:</td>
+                  <td scope="col">Tổng tiền</td>
                   <td scope="col">{Data.totalMoney}</td>
                 </tr>
                 <tr>
-                  <td scope="col">Loại GD:</td>
+                  <td scope="col">Loại GD</td>
                   <td scope="col">Thanh toán hóa đơn</td>
-                  <td scope="col">Trạng thái GD:</td>
-                  <td scope="col">{Data.status}</td>
+                  <td scope="col">Trạng thái GD</td>
+                  <th scope="col">{Data.status}</th>
                 </tr>
                 <tr>
-                  <td scope="col">Dịch vụ:</td>
+                  <td scope="col">Dịch vụ</td>
                   <td scope="col">{Data.service}</td>
-                  <td scope="col">Nội dung:</td>
+                  <td scope="col">Nội dung</td>
                   <td scope="col"></td>
                 </tr>
                 <tr>
-                  <td scope="col">Nhà cung cấp:</td>
+                  <td scope="col">Nhà cung cấp</td>
                   <td scope="col">{Data.supplier}</td>
                 </tr>
                 </thead>
@@ -80,11 +86,6 @@ export default class detailPay extends Component {
 
           </Modal.Body>
 
-          <Modal.Footer>
-            <Button variant="secondary" onClick={this.handleClose}>
-              Đóng
-            </Button>
-          </Modal.Footer>
 
         </Modal>
       </div>
